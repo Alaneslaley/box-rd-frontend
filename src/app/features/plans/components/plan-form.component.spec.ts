@@ -35,4 +35,12 @@ describe('PlanFormComponent', () => {
     component.submitForm();
     expect(emitted).toMatchObject({ type: 'CLASS_PACKAGE', includedClasses: 12 });
   });
+
+  it('calcula automáticamente la vigencia por tipo de plan', () => {
+    expect(component.form.controls.validityDays.value).toBe(30);
+    component.form.controls.type.setValue('WEEKLY');
+    expect(component.form.controls.validityDays.value).toBe(7);
+    component.form.controls.type.setValue('SINGLE_CLASS');
+    expect(component.form.controls.validityDays.value).toBe(1);
+  });
 });

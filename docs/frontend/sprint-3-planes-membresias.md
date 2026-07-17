@@ -50,8 +50,8 @@ Las llamadas protegidas reutilizan los interceptores de Sprint 1 para bearer tok
 ### Planes
 
 - `PlanSnapshot`: `id`, `branchId`, `name`, `description`, `type`, `price`, `currency`, `validityDays`, `includedClasses`, `status`.
-- `CreatePlanRequest`: `branchId` opcional, `name`, `description`, `type`, `price`, `currency`, `validityDays`, `includedClasses`.
-- `UpdatePlanRequest`: `name`, `description`, `price`, `currency`, `validityDays`, `includedClasses`, `status`. El tipo no se envía porque el contrato no lo permite.
+- `CreatePlanRequest`: `branchId` opcional, `name`, `description`, `type`, `price`, `currency`, `validityDays` obligatorio, `includedClasses`.
+- `UpdatePlanRequest`: `name`, `description`, `price`, `currency`, `validityDays` obligatorio, `includedClasses`, `status`. El tipo no se envía porque el contrato no lo permite.
 - Tipos: `WEEKLY`, `MONTHLY`, `SINGLE_CLASS`, `CLASS_PACKAGE`.
 - Estados: `ACTIVO`, `INACTIVO`.
 
@@ -68,7 +68,7 @@ Las listas usan `PageResponse<T>` con `content`, `page`, `size`, `totalElements`
 
 Son ayudas de UX, no reglas de negocio:
 
-- Plan: nombre requerido y máximo 120; descripción máximo 300; precio requerido y no negativo; moneda con tres letras mayúsculas; vigencia mayor que cero si se captura. “Clases incluidas” solo se captura y envía para `SINGLE_CLASS` y `CLASS_PACKAGE`; no se muestra ni se envía para planes semanales o mensuales.
+- Plan: nombre requerido y máximo 120; descripción máximo 300; precio requerido y no negativo; moneda con tres letras mayúsculas; vigencia obligatoria mayor que cero. La vigencia se asigna automáticamente a `7` días para `WEEKLY`, `30` para `MONTHLY` y `1` para `SINGLE_CLASS`; en `CLASS_PACKAGE` permanece editable. “Clases incluidas” solo se captura y envía para `SINGLE_CLASS` y `CLASS_PACKAGE`; no se muestra ni se envía para planes semanales o mensuales.
 - Membresía: alumno, plan y fecha de inicio requeridos; fecha con formato `YYYY-MM-DD`.
 - Renovación: fecha efectiva requerida con formato `YYYY-MM-DD`.
 - Botones deshabilitados durante guardado y mensajes asociados a campos inválidos.

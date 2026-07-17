@@ -25,7 +25,7 @@ describe('PlansApiService', () => {
   });
 
   it('crea un plan con el body exacto', () => {
-    const body = { name: 'Mensual', type: 'MONTHLY' as const, price: 900, currency: 'MXN' };
+    const body = { name: 'Mensual', type: 'MONTHLY' as const, price: 900, currency: 'MXN', validityDays: 30 };
     service.create(body).subscribe();
     const request = http.expectOne('/api/v1/plans');
     expect(request.request.method).toBe('POST');
@@ -34,7 +34,7 @@ describe('PlansApiService', () => {
   });
 
   it('actualiza un plan sin inventar un endpoint de detalle', () => {
-    const body = { name: 'Mensual', price: 950, currency: 'MXN', status: 'ACTIVO' as const };
+    const body = { name: 'Mensual', price: 950, currency: 'MXN', validityDays: 30, status: 'ACTIVO' as const };
     service.update('plan-id', body).subscribe();
     const request = http.expectOne('/api/v1/plans/plan-id');
     expect(request.request.method).toBe('PUT');

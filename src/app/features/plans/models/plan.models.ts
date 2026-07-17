@@ -9,7 +9,7 @@ export interface PlanSnapshot {
   type: PlanType;
   price: number;
   currency: string;
-  validityDays: number | null;
+  validityDays: number;
   includedClasses: number | null;
   status: PlanStatus;
 }
@@ -21,7 +21,7 @@ export interface CreatePlanRequest {
   type: PlanType;
   price: number;
   currency: string;
-  validityDays?: number | null;
+  validityDays: number;
   includedClasses?: number | null;
 }
 
@@ -30,7 +30,7 @@ export interface UpdatePlanRequest {
   description?: string | null;
   price: number;
   currency: string;
-  validityDays?: number | null;
+  validityDays: number;
   includedClasses?: number | null;
   status: PlanStatus;
 }

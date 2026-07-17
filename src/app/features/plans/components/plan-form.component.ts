@@ -5,6 +5,7 @@ import { CreatePlanRequest, PlanSnapshot, PlanStatus, PlanType, UpdatePlanReques
 
 const NOT_BLANK_PATTERN = /\S/;
 const CURRENCY_PATTERN = /^[A-Z]{3}$/;
+const AUTOMATIC_VALIDITY_DAYS: Partial<Record<PlanType, number>> = { WEEKLY: 7, MONTHLY: 30, SINGLE_CLASS: 1 };
 
 function optionalPositiveInteger(control: AbstractControl<number | null>): ValidationErrors | null {
   const value = control.value;
@@ -22,7 +23,7 @@ function optionalPositiveInteger(control: AbstractControl<number | null>): Valid
         <div class="form-field form-field-wide"><label for="plan-description">Descripción</label><textarea id="plan-description" formControlName="description" maxlength="300" rows="3"></textarea>@if (invalid('description')) { <span class="field-error">La descripción admite máximo 300 caracteres.</span> }</div>
         <div class="form-field"><label for="plan-price">Precio *</label><input id="plan-price" type="number" min="0" step="0.01" formControlName="price" />@if (invalid('price')) { <span class="field-error">Ingresa un precio igual o mayor que cero.</span> }</div>
         <div class="form-field"><label for="plan-currency">Moneda *</label><input id="plan-currency" formControlName="currency" minlength="3" maxlength="3" autocapitalize="characters" placeholder="MXN" />@if (invalid('currency')) { <span class="field-error">Usa un código de tres letras mayúsculas, por ejemplo MXN.</span> }</div>
-        <div class="form-field"><label for="plan-validity">Días de vigencia</label><input id="plan-validity" type="number" min="1" step="1" formControlName="validityDays" />@if (invalid('validityDays')) { <span class="field-error">Si se captura, debe ser un entero mayor que cero.</span> }</div>
+        <div class="form-field"><label for="plan-validity">Días de vigencia{{ hasAutomaticValidity() ? ' (automáticos)' : '' }}</label><input id="plan-validity" type="number" min="1" step="1" formControlName="validityDays" [readOnly]="hasAutomaticValidity()" />@if (hasAutomaticValidity()) { <small class="field-help">{{ automaticValidityDays() }} día(s) según el tipo seleccionado.</small> } @if (invalid('validityDays')) { <span class="field-error">La vigencia es obligatoria y debe ser un entero mayor que cero.</span> }</div>
         @if (supportsIncludedClasses()) { <div class="form-field"><label for="plan-classes">Clases incluidas</label><input id="plan-classes" type="number" min="1" step="1" formControlName="includedClasses" />@if (invalid('includedClasses')) { <span class="field-error">Si se captura, debe ser un entero mayor que cero.</span> }</div> }
         @if (mode() === 'edit') { <div class="form-field"><label for="plan-status">Estado *</label><select id="plan-status" formControlName="status"><option value="ACTIVO">Activo</option><option value="INACTIVO">Inactivo</option></select></div> }
       </div></section>
@@ -46,7 +47,7 @@ export class PlanFormComponent {
     type: new FormControl<PlanType>('MONTHLY', { nonNullable: true, validators: [Validators.required] }),
     price: new FormControl<number | null>(null, { validators: [Validators.required, Validators.min(0)] }),
     currency: new FormControl('MXN', { nonNullable: true, validators: [Validators.required, Validators.pattern(CURRENCY_PATTERN)] }),
-    validityDays: new FormControl<number | null>(null, { validators: [optionalPositiveInteger] }),
+    validityDays: new FormControl<number | null>(null, { validators: [Validators.required, optionalPositiveInteger] }),
     includedClasses: new FormControl<number | null>(null, { validators: [optionalPositiveInteger] }),
     status: new FormControl<PlanStatus>('ACTIVO', { nonNullable: true, validators: [Validators.required] }),
   });
@@ -54,25 +55,35 @@ export class PlanFormComponent {
   constructor() {
     this.form.controls.type.valueChanges.subscribe((type) => {
       if (!this.supportsIncludedClasses(type)) this.form.controls.includedClasses.setValue(null);
+      this.applyAutomaticValidity(type);
     });
+    this.applyAutomaticValidity(this.form.controls.type.value);
     effect(() => {
       const editMode = this.mode() === 'edit';
       if (editMode) this.form.controls.type.disable({ emitEvent: false }); else this.form.controls.type.enable({ emitEvent: false });
       const plan = this.plan();
       if (!plan) return;
       this.form.reset({ name: plan.name, description: plan.description ?? '', type: plan.type, price: plan.price, currency: plan.currency, validityDays: plan.validityDays, includedClasses: plan.includedClasses, status: plan.status });
+      this.applyAutomaticValidity(plan.type);
     });
   }
 
   invalid(name: keyof typeof this.form.controls): boolean { const control = this.form.controls[name]; return control.touched && control.invalid; }
   supportsIncludedClasses(type: PlanType = this.form.controls.type.value): boolean { return type === 'SINGLE_CLASS' || type === 'CLASS_PACKAGE'; }
+  automaticValidityDays(type: PlanType = this.form.controls.type.value): number | null { return AUTOMATIC_VALIDITY_DAYS[type] ?? null; }
+  hasAutomaticValidity(type: PlanType = this.form.controls.type.value): boolean { return this.automaticValidityDays(type) !== null; }
 
   submitForm(): void {
     if (this.form.invalid) { this.form.markAllAsTouched(); return; }
     const value = this.form.getRawValue();
-    const common = { name: value.name.trim(), description: value.description.trim() || null, price: value.price as number, currency: value.currency.trim().toUpperCase(), validityDays: value.validityDays };
+    const common = { name: value.name.trim(), description: value.description.trim() || null, price: value.price as number, currency: value.currency.trim().toUpperCase(), validityDays: (this.automaticValidityDays(value.type) ?? value.validityDays) as number };
     const classes = this.supportsIncludedClasses(value.type) ? { includedClasses: value.includedClasses } : {};
     if (this.mode() === 'edit') this.updateSubmitted.emit({ ...common, ...classes, status: value.status });
     else this.createSubmitted.emit({ ...common, ...classes, type: value.type });
+  }
+
+  private applyAutomaticValidity(type: PlanType): void {
+    const days = this.automaticValidityDays(type);
+    if (days !== null) this.form.controls.validityDays.setValue(days, { emitEvent: false });
   }
 }
