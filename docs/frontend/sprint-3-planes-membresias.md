@@ -68,7 +68,7 @@ Las listas usan `PageResponse<T>` con `content`, `page`, `size`, `totalElements`
 
 Son ayudas de UX, no reglas de negocio:
 
-- Plan: nombre requerido y máximo 120; descripción máximo 300; precio requerido y no negativo; moneda con tres letras mayúsculas; vigencia y clases, si se capturan, mayores que cero.
+- Plan: nombre requerido y máximo 120; descripción máximo 300; precio requerido y no negativo; moneda con tres letras mayúsculas; vigencia mayor que cero si se captura. “Clases incluidas” solo se captura y envía para `SINGLE_CLASS` y `CLASS_PACKAGE`; no se muestra ni se envía para planes semanales o mensuales.
 - Membresía: alumno, plan y fecha de inicio requeridos; fecha con formato `YYYY-MM-DD`.
 - Renovación: fecha efectiva requerida con formato `YYYY-MM-DD`.
 - Botones deshabilitados durante guardado y mensajes asociados a campos inválidos.
