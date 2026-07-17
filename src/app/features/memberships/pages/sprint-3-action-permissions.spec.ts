@@ -34,5 +34,16 @@ describe('acciones visuales de Sprint 3', () => {
     fixture.detectChanges();
     expect(fixture.nativeElement.textContent).not.toContain('Nueva membresía');
     expect(fixture.nativeElement.textContent).not.toContain('Renovar');
+    expect(fixture.nativeElement.textContent).not.toContain('Registrar pago');
+  });
+
+  it('muestra Registrar pago en membresías con PAGOS_REGISTRAR', async () => {
+    TestBed.resetTestingModule();
+    const membership = { id: 'membership-id', branchId: 'branch-id', studentId: 'student-id', planId: 'plan-id', planName: 'Mensual', planType: 'MONTHLY' as const, startDate: '2026-07-01', endDate: '2026-07-31', status: 'ACTIVE' as const, includedClasses: null, remainingClasses: null };
+    const facade = { loading: signal(false), error: signal(null), page: signal({ content: [membership], page: 0, size: 20, totalElements: 1, totalPages: 1, first: true, last: true }), loadMemberships: vi.fn(), changePage: vi.fn() };
+    await TestBed.configureTestingModule({ imports: [MembershipsListPageComponent], providers: [provideRouter([]), { provide: MembershipsFacade, useValue: facade }] }).compileComponents();
+    TestBed.inject(AuthSessionStore).setCurrentUser({ ...userWithoutWritePermissions, permissions: ['MEMBRESIAS_CONSULTAR', 'PAGOS_REGISTRAR'] });
+    const fixture = TestBed.createComponent(MembershipsListPageComponent); fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('Registrar pago');
   });
 });

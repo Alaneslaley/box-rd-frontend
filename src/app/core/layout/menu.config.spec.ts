@@ -1,6 +1,8 @@
 import { PERMISSIONS } from '../auth/permissions';
 import { MEMBERSHIPS_ROUTES } from '../../features/memberships/memberships.routes';
 import { PLANS_ROUTES } from '../../features/plans/plans.routes';
+import { PAYMENTS_ROUTES } from '../../features/payments/payments.routes';
+import { CASH_ROUTES } from '../../features/cash/cash.routes';
 import { APP_MENU } from './menu.config';
 
 describe('menú y permisos de Sprint 3', () => {
@@ -17,5 +19,17 @@ describe('menú y permisos de Sprint 3', () => {
   it('protege alta y renovación de membresías con los códigos reales', () => {
     expect(MEMBERSHIPS_ROUTES.find((route) => route.path === 'new')?.data?.['permissionsAny']).toEqual([PERMISSIONS.MEMBERSHIPS_CREATE]);
     expect(MEMBERSHIPS_ROUTES.find((route) => route.path === ':id/renew')?.data?.['permissionsAny']).toEqual([PERMISSIONS.MEMBERSHIPS_RENEW]);
+  });
+
+  it('muestra Pagos y Caja con permisos de consulta', () => {
+    expect(APP_MENU.find((item) => item.route === '/payments')?.permissionsAny).toEqual([PERMISSIONS.PAYMENTS_READ]);
+    expect(APP_MENU.find((item) => item.route === '/cash')?.permissionsAny).toEqual([PERMISSIONS.CASH_READ]);
+  });
+
+  it('protege registro, recibo, apertura y cierre con permisos reales', () => {
+    expect(PAYMENTS_ROUTES.find((route) => route.path === 'new')?.data?.['permissionsAny']).toEqual([PERMISSIONS.PAYMENTS_REGISTER]);
+    expect(PAYMENTS_ROUTES.find((route) => route.path === ':id/receipt')?.data?.['permissionsAny']).toEqual([PERMISSIONS.PAYMENTS_RECEIPT, PERMISSIONS.PAYMENTS_DETAIL]);
+    expect(CASH_ROUTES.find((route) => route.path === 'open')?.data?.['permissionsAny']).toEqual([PERMISSIONS.CASH_OPEN]);
+    expect(CASH_ROUTES.find((route) => route.path === 'close')?.data?.['permissionsAny']).toEqual([PERMISSIONS.CASH_CLOSE]);
   });
 });

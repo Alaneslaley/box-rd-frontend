@@ -49,3 +49,25 @@ a { color: var(--color-primary); }
 .renewal-form { display: grid; gap: 1rem; margin-top: 1rem; }
 .renewal-form > p { color: var(--color-muted); font-size: .85rem; }
 @media (max-width: 700px) { .section-heading, .membership-summary { align-items: stretch; flex-direction: column; }.renewal-summary dl { grid-template-columns: 1fr; } }
+
+/* Payments, Cash & Receipts Sprint 4 */
+.alert-success { background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46; margin-bottom: 1rem; }
+.finance-table table { min-width: 86rem; }
+.finance-detail dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.finance-detail dd { overflow-wrap: anywhere; }
+.empty-state .btn { display: inline-flex; margin-top: 1rem; text-decoration: none; }
+.close-result { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; }
+.cash-close-summary { display: grid; gap: .75rem; margin-bottom: 1rem; }
+.cash-close-summary div { display: flex; align-items: center; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--color-border); padding-bottom: .65rem; }
+.cash-close-summary span, .cash-close-summary p { color: var(--color-muted); }
+.receipt-page { max-width: 48rem; margin: 0 auto; }
+.receipt-card { padding: 2rem; }
+.receipt-brand { border-bottom: 2px solid var(--color-primary); display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1rem; }
+.receipt-brand strong { color: var(--color-sidebar); font-size: 1.5rem; }
+.receipt-brand span { color: var(--color-muted); }
+.receipt-card dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 0; }
+.receipt-card dl div { border-bottom: 1px solid var(--color-border); padding-bottom: .7rem; }
+.receipt-card dt { color: var(--color-muted); font-size: .78rem; font-weight: 700; text-transform: uppercase; }
+.receipt-card dd { margin: .25rem 0 0; overflow-wrap: anywhere; }
+@media (max-width: 700px) { .finance-detail dl, .receipt-card dl { grid-template-columns: 1fr; }.receipt-card { padding: 1.25rem; }.receipt-brand { align-items: start; flex-direction: column; } }
+@media print { .sidebar, .topbar, .no-print, .receipt-page .page-header p { display: none !important; }.app-shell { display: block; }.content-area { max-width: none; padding: 0; }.receipt-page { max-width: none; }.receipt-card { border: 0; box-shadow: none; }.receipt-page .page-header { margin-bottom: 1rem; } }

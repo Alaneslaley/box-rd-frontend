@@ -9,4 +9,6 @@ export const API_ENDPOINTS = {
   students: '/students',
   plans: '/plans',
   memberships: '/memberships',
+  payments: '/payments',
+  cashRegister: '/cash-register',
 } as const;
