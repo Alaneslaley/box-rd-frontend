@@ -25,3 +25,27 @@ a { color: var(--color-primary); }
 /* Students Sprint 2 */
 .form-field { display: grid; gap: .35rem; }.form-field label { color: var(--color-text); font-size: .88rem; font-weight: 700; }.form-field input, .form-field select, .form-field textarea { width: 100%; border: 1px solid #94a3b8; border-radius: .45rem; background: #fff; color: var(--color-text); min-height: 2.6rem; padding: .5rem .65rem; }.form-field textarea { resize: vertical; }.student-filters { display: grid; grid-template-columns: minmax(14rem, 1fr) minmax(12rem, .5fr) auto; align-items: end; gap: 1rem; margin-bottom: 1rem; }.student-filters .btn { align-self: end; }.filter-note { grid-column: 1 / -1; font-size: .78rem; }.students-table-card { margin-top: 1rem; }.students-table-card td strong, .students-table-card td small { display: block; }.students-table-card td small { color: var(--color-muted); margin-top: .2rem; }.table-actions, .header-actions, .form-actions { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }.btn-link { background: transparent; color: var(--color-primary); min-height: 2rem; padding: .25rem .4rem; text-decoration: none; }.pagination { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-top: 1rem; }.pagination span { color: var(--color-muted); font-size: .85rem; text-align: center; }.student-form { display: grid; gap: 1rem; }.form-section h2 { margin-bottom: .25rem; }.form-section > p { color: var(--color-muted); font-size: .85rem; margin: 0 0 1rem; }.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }.form-field-wide { grid-column: 1 / -1; }.form-actions { justify-content: end; padding: .25rem 0 1rem; }.detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }.detail-card:first-child { grid-row: span 2; }.detail-card dl { margin: 0; display: grid; gap: .9rem; }.detail-card dl div { border-bottom: 1px solid #e2e8f0; padding-bottom: .65rem; }.detail-card dt { color: var(--color-muted); font-size: .78rem; font-weight: 700; text-transform: uppercase; }.detail-card dd { margin: .2rem 0 0; }.placeholder-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: 1rem; }
 @media (max-width: 700px) { .student-filters, .form-grid, .detail-grid, .placeholder-grid { grid-template-columns: 1fr; }.form-field-wide { grid-column: auto; }.detail-card:first-child { grid-row: auto; }.students-table-card table, .students-table-card thead, .students-table-card tbody, .students-table-card tr, .students-table-card th, .students-table-card td { display: block; }.students-table-card thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }.students-table-card tr { border-bottom: 1px solid var(--color-border); padding: .6rem 0; }.students-table-card td { border: 0; display: grid; grid-template-columns: 7rem 1fr; gap: .5rem; padding: .45rem 0; }.students-table-card td::before { content: attr(data-label); color: var(--color-muted); font-size: .78rem; font-weight: 700; }.pagination { align-items: stretch; flex-direction: column; } }
+
+/* Plans & Memberships Sprint 3 */
+.field-help { color: var(--color-muted); font-size: .78rem; }
+.catalog-filter { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+.check-field { display: inline-flex; align-items: center; gap: .55rem; font-weight: 700; }
+.check-field input { width: 1.1rem; height: 1.1rem; accent-color: var(--color-primary); }
+.warning-state { border-color: #fde68a; margin-bottom: 1rem; }
+.warning-state h2 { color: var(--color-warning); }
+.id-text { color: var(--color-muted); display: block; font-size: .7rem; margin-top: .25rem; overflow-wrap: anywhere; }
+.student-memberships { margin-top: 1rem; }
+.section-heading { display: flex; align-items: start; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+.section-heading h2 { margin: 0 0 .25rem; }
+.membership-cards { display: grid; gap: .65rem; }
+.membership-summary { border: 1px solid var(--color-border); border-radius: .55rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .8rem; }
+.membership-summary strong, .membership-summary small { display: block; }
+.membership-summary small { color: var(--color-muted); margin-top: .25rem; }
+.membership-summary > div:last-child { display: flex; align-items: center; gap: .5rem; }
+.renewal-summary { margin-bottom: 1rem; }
+.renewal-summary dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 1rem 0 0; }
+.renewal-summary dt { color: var(--color-muted); font-size: .78rem; font-weight: 700; text-transform: uppercase; }
+.renewal-summary dd { margin: .25rem 0 0; overflow-wrap: anywhere; }
+.renewal-form { display: grid; gap: 1rem; margin-top: 1rem; }
+.renewal-form > p { color: var(--color-muted); font-size: .85rem; }
+@media (max-width: 700px) { .section-heading, .membership-summary { align-items: stretch; flex-direction: column; }.renewal-summary dl { grid-template-columns: 1fr; } }

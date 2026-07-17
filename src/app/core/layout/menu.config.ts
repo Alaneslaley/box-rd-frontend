@@ -4,6 +4,7 @@ import { PERMISSIONS } from '../auth/permissions';
 export const APP_MENU: MenuItem[] = [
   { label: 'Dashboard', route: '/dashboard', permissionsAny: [PERMISSIONS.DASHBOARD_VIEW], phase: 'Fase 1' },
   { label: 'Alumnos', route: '/students', permissionsAny: [PERMISSIONS.STUDENTS_VIEW], phase: 'Fase 1' },
+  { label: 'Planes', route: '/plans', permissionsAny: [PERMISSIONS.PLANS_VIEW], phase: 'Fase 1' },
   { label: 'Membresías', route: '/memberships', permissionsAny: [PERMISSIONS.MEMBERSHIPS_VIEW], phase: 'Fase 1' },
   { label: 'Pagos', route: '/payments', permissionsAny: [PERMISSIONS.PAYMENTS_VIEW], phase: 'Fase 1' },
   { label: 'Caja', route: '/cash', permissionsAny: [PERMISSIONS.CASH_VIEW], phase: 'Fase 1' },

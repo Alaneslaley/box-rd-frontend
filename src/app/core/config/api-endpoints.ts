@@ -7,4 +7,6 @@ export const API_ENDPOINTS = {
     me: '/auth/me',
   },
   students: '/students',
+  plans: '/plans',
+  memberships: '/memberships',
 } as const;
