@@ -6,7 +6,7 @@
 - Shell autenticado con sidebar, topbar, menú por permisos visuales y cierre de sesión.
 - Rutas lazy para auth, dashboard, alumnos, membresías, pagos, caja, asistencia, reportes, seguridad y deportivo.
 - Login reactivo preparado para el API, store de sesión con signals, guards funcionales e interceptores de token, error, trazabilidad y carga.
-- Entornos con `apiBaseUrl`, nombre, versión y bandera `enableMockAuth` (apagada por defecto).
+- Entornos con `apiBaseUrl`, nombre, versión y configuración separada para desarrollo/producción.
 - Tema CSS propio basado en slate, azul, verde, ámbar y rojo reservado para riesgo; no se instaló ni mezcló un kit UI.
 - Componentes compartidos de cabecera, estados, badge, confirmación placeholder y tabla base.
 - Pruebas unitarias iniciales para sesión, guard y badge.
@@ -32,7 +32,7 @@ No existe script `lint` ni configuración de ESLint en el proyecto inicial. El p
 
 ## Ambientes
 
-`src/environments/environment.ts` usa `apiBaseUrl: '/api/v1'`. Para desarrollo local con API separada puede cambiarse temporalmente a `http://localhost:8080/api/v1`; producción conserva la ruta relativa para proxy inverso. `enableMockAuth` está en `false`; al activarlo solo habilita navegación visual aislada y nunca debe desplegarse así.
+`src/environments/environment.ts` usa `apiBaseUrl: '/api/v1'`. Para desarrollo local con API separada puede cambiarse temporalmente a `http://localhost:8080/api/v1`; producción conserva la ruta relativa para proxy inverso. Sprint 1 elimina el mock de autenticación para mantener los contratos aislados del API real.
 
 ## API esperada
 

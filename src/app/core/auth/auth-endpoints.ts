@@ -1,7 +1,4 @@
-/** Contratos confirmados por el blueprint backend Fase 1. */
-export const AUTH_ENDPOINTS = {
-  login: '/auth/login',
-  refresh: '/auth/refresh',
-  logout: '/auth/logout',
-  me: '/auth/me',
-} as const;
+import { API_ENDPOINTS } from '../config/api-endpoints';
+
+/** Alias de transición para no dispersar strings de endpoints. */
+export const AUTH_ENDPOINTS = API_ENDPOINTS.auth;

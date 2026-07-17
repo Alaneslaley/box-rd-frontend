@@ -2,11 +2,11 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { APP_CONFIG } from '../config/app-config.token';
-import { AuthUser } from '../models/user-session.model';
+import { AuthMeResponse, AuthUser } from '../models/user-session.model';
 import { AUTH_ENDPOINTS } from './auth-endpoints';
 
-export interface LoginRequest { username: string; password: string; }
-export interface LoginResponse { accessToken: string; refreshToken?: string; user: AuthUser; }
+export interface LoginRequest { usernameOrEmail: string; password: string; }
+export interface LoginResponse { accessToken: string; refreshToken?: string; tokenType?: string; expiresIn?: number; user?: AuthUser; }
 
 @Injectable({ providedIn: 'root' })
 export class AuthApiService {
@@ -17,7 +17,7 @@ export class AuthApiService {
   login(request: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(this.url(AUTH_ENDPOINTS.login), request);
   }
-  refresh(): Observable<LoginResponse> { return this.http.post<LoginResponse>(this.url(AUTH_ENDPOINTS.refresh), {}); }
+  refresh(refreshToken: string): Observable<LoginResponse> { return this.http.post<LoginResponse>(this.url(AUTH_ENDPOINTS.refresh), { refreshToken }); }
   logout(): Observable<void> { return this.http.post<void>(this.url(AUTH_ENDPOINTS.logout), {}); }
-  me(): Observable<AuthUser> { return this.http.get<AuthUser>(this.url(AUTH_ENDPOINTS.me)); }
+  me(): Observable<AuthMeResponse> { return this.http.get<AuthMeResponse>(this.url(AUTH_ENDPOINTS.me)); }
 }

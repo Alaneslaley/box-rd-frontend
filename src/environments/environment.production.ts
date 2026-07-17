@@ -5,5 +5,4 @@ export const environment: AppEnvironment = {
   apiBaseUrl: '/api/v1',
   appName: 'GymBox',
   appVersion: '0.0.0',
-  enableMockAuth: false,
 };

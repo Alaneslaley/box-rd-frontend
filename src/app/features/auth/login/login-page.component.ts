@@ -1,11 +1,10 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { finalize, of } from 'rxjs';
-import { APP_CONFIG } from '../../../core/config/app-config.token';
+import { finalize } from 'rxjs';
 import { ApiError } from '../../../core/models/api-error.model';
-import { AuthApiService, LoginResponse } from '../../../core/auth/auth-api.service';
-import { AuthSessionStore } from '../../../core/auth/auth-session.store';
+import { AuthFacade } from '../../../core/auth/auth.facade';
+import { APP_CONFIG } from '../../../core/config/app-config.token';
 
 @Component({
   selector: 'app-login-page',
@@ -17,8 +16,8 @@ import { AuthSessionStore } from '../../../core/auth/auth-session.store';
       @if (error()) { <p class="alert alert-error" role="alert">{{ error() }}</p> }
       <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
         <label for="username">Correo o usuario</label>
-        <input id="username" type="text" formControlName="username" autocomplete="username" />
-        @if (form.controls.username.touched && form.controls.username.invalid) { <span class="field-error">Ingresa tu correo o usuario.</span> }
+        <input id="username" type="text" formControlName="usernameOrEmail" autocomplete="username" />
+        @if (form.controls.usernameOrEmail.touched && form.controls.usernameOrEmail.invalid) { <span class="field-error">Ingresa tu correo o usuario.</span> }
         <label for="password">Contraseña</label>
         <input id="password" type="password" formControlName="password" autocomplete="current-password" />
         @if (form.controls.password.touched && form.controls.password.invalid) { <span class="field-error">La contraseña es obligatoria.</span> }
@@ -28,28 +27,29 @@ import { AuthSessionStore } from '../../../core/auth/auth-session.store';
     </section></main>`,
 })
 export class LoginPageComponent {
-  private readonly api = inject(AuthApiService);
-  private readonly session = inject(AuthSessionStore);
+  private readonly auth = inject(AuthFacade);
+  private readonly config = inject(APP_CONFIG);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
-  private readonly config = inject(APP_CONFIG);
   readonly appName = this.config.appName;
   readonly submitting = signal(false);
   readonly error = signal<string | null>(null);
-  readonly form = new FormGroup({ username: new FormControl('', { nonNullable: true, validators: [Validators.required] }), password: new FormControl('', { nonNullable: true, validators: [Validators.required] }) });
-  readonly redirectUrl = computed(() => this.route.snapshot.queryParamMap.get('redirectUrl') || '/dashboard');
+  readonly form = new FormGroup({ usernameOrEmail: new FormControl('', { nonNullable: true, validators: [Validators.required] }), password: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(6)] }) });
+  readonly returnUrl = computed(() => this.route.snapshot.queryParamMap.get('returnUrl') || '/dashboard');
 
   submit(): void {
     if (this.form.invalid) { this.form.markAllAsTouched(); return; }
     this.submitting.set(true); this.error.set(null);
     const request = this.form.getRawValue();
-    const response$ = this.config.enableMockAuth ? of(this.mockResponse(request.username)) : this.api.login(request);
-    response$.pipe(finalize(() => this.submitting.set(false))).subscribe({
-      next: (response) => { this.session.loginSuccess({ accessToken: response.accessToken, refreshToken: response.refreshToken ?? null, user: response.user }); void this.router.navigateByUrl(this.redirectUrl()); },
-      error: (error: ApiError) => this.error.set(error.message || 'No fue posible iniciar sesión.'),
+    this.auth.login(request).pipe(finalize(() => this.submitting.set(false))).subscribe({
+      next: () => void this.router.navigateByUrl(this.returnUrl()),
+      error: (error: ApiError) => this.error.set(this.loginMessage(error)),
     });
   }
-  private mockResponse(username: string): LoginResponse {
-    return { accessToken: 'mock-token-only-for-ui', user: { id: 'mock-user', username, fullName: 'Usuario de prueba', roles: ['ADMIN'], permissions: ['dashboard.read', 'students.read', 'memberships.read', 'payments.read', 'cash.read-current', 'attendance.read', 'reports.admin.read', 'users.read', 'sports.dashboard.read'] } };
+  private loginMessage(error: ApiError): string {
+    if (error.status === 401) return 'Usuario o contraseña incorrectos.';
+    if (error.status === 403) return 'Tu usuario no tiene permisos para acceder.';
+    if (error.status === 0) return 'No se pudo conectar con el servidor.';
+    return 'No fue posible iniciar sesión. Intenta nuevamente.';
   }
 }

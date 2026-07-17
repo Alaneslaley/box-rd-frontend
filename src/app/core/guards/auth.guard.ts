@@ -4,4 +4,4 @@ import { AuthSessionStore } from '../auth/auth-session.store';
 
 export const authGuard: CanActivateFn = (_route, state) => inject(AuthSessionStore).isAuthenticated()
   ? true
-  : inject(Router).createUrlTree(['/auth/login'], { queryParams: { redirectUrl: state.url } });
+  : inject(Router).createUrlTree(['/auth/login'], { queryParams: { returnUrl: state.url } });
