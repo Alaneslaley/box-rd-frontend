@@ -39,7 +39,7 @@ Para un menú, agregar un `MenuItem` en `core/layout/menu.config.ts` con el mism
 - `POST /api/v1/auth/logout`
 - `GET /api/v1/auth/me`
 
-Los paths están en `core/config/api-endpoints.ts`. El contrato definitivo está documentado en `docs/arquitectura/dtos_y_refresh_token_backend.md`: login y refresh devuelven `AuthTokens`; `/auth/me` devuelve `UserSnapshot` directamente; logout recibe `{ refreshToken }` y responde `204`.
+Los paths están en `core/config/api-endpoints.ts`. El contrato definitivo está documentado en `docs/arquitectura/dtos_y_refresh_token_backend.md`: login y refresh devuelven `AuthTokens`; `/auth/me` devuelve `UserSnapshot` directamente; logout recibe `{ refreshToken }` y responde `204`. Los permisos visuales usan los códigos canónicos devueltos por ese endpoint, por ejemplo `ALUMNOS_CONSULTAR` y `REPORTES_DIARIOS_CONSULTAR`.
 
 ## Ambiente y decisiones
 

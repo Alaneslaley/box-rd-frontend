@@ -6,4 +6,5 @@ export const API_ENDPOINTS = {
     logout: '/auth/logout',
     me: '/auth/me',
   },
+  students: '/students',
 } as const;

@@ -11,7 +11,7 @@ export const routes: Routes = [
   { path: '', component: AppShellComponent, canActivate: [authGuard], canActivateChild: [permissionChildGuard], children: [
     { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
     feature('dashboard', [PERMISSIONS.DASHBOARD_VIEW], () => import('./features/dashboard/dashboard.routes').then((m) => m.DASHBOARD_ROUTES)),
-    feature('students', [PERMISSIONS.STUDENTS_VIEW], () => import('./features/students/students.routes').then((m) => m.STUDENTS_ROUTES)),
+    feature('students', [PERMISSIONS.STUDENTS_VIEW, PERMISSIONS.STUDENTS_CREATE, PERMISSIONS.STUDENTS_EDIT], () => import('./features/students/students.routes').then((m) => m.STUDENTS_ROUTES)),
     feature('memberships', [PERMISSIONS.MEMBERSHIPS_VIEW], () => import('./features/memberships/memberships.routes').then((m) => m.MEMBERSHIPS_ROUTES)),
     feature('payments', [PERMISSIONS.PAYMENTS_VIEW], () => import('./features/payments/payments.routes').then((m) => m.PAYMENTS_ROUTES)),
     feature('cash', [PERMISSIONS.CASH_VIEW], () => import('./features/cash/cash.routes').then((m) => m.CASH_ROUTES)),

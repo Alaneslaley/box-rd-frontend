@@ -1,22 +1,22 @@
-/**
- * Códigos visuales alineados con la arquitectura web. Confirmar el contrato
- * final con el backend antes de habilitar operaciones de cada módulo.
- */
+/** Códigos canónicos devueltos por GET /api/v1/auth/me. */
 export const PERMISSIONS = {
-  DASHBOARD_VIEW: 'dashboard.read',
-  STUDENTS_VIEW: 'students.read',
-  STUDENTS_CREATE: 'students.create',
-  STUDENTS_EDIT: 'students.update',
-  MEMBERSHIPS_VIEW: 'memberships.read',
-  MEMBERSHIPS_MANAGE: 'memberships.create',
-  PAYMENTS_VIEW: 'payments.read',
-  PAYMENTS_REGISTER: 'payments.create',
-  CASH_VIEW: 'cash.read-current',
-  CASH_OPEN: 'cash.open',
-  CASH_CLOSE: 'cash.close',
-  ATTENDANCE_VIEW: 'attendance.read',
-  ATTENDANCE_REGISTER: 'attendance.check-in',
-  REPORTS_VIEW: 'reports.admin.read',
-  SECURITY_VIEW: 'users.read',
-  SPORTS_VIEW: 'sports.dashboard.read',
+  DASHBOARD_VIEW: 'REPORTES_DIARIOS_CONSULTAR',
+  STUDENTS_VIEW: 'ALUMNOS_CONSULTAR',
+  STUDENTS_DETAIL: 'ALUMNOS_CONSULTAR',
+  STUDENTS_CREATE: 'ALUMNOS_CREAR',
+  STUDENTS_EDIT: 'ALUMNOS_MODIFICAR',
+  STUDENTS_DEACTIVATE: 'ALUMNOS_DESACTIVAR',
+  MEMBERSHIPS_VIEW: 'MEMBRESIAS_CONSULTAR',
+  MEMBERSHIPS_MANAGE: 'MEMBRESIAS_MODIFICAR',
+  PAYMENTS_VIEW: 'PAGOS_CONSULTAR',
+  PAYMENTS_REGISTER: 'PAGOS_REGISTRAR',
+  CASH_VIEW: 'CAJA_CONSULTAR',
+  CASH_OPEN: 'CAJA_ABRIR',
+  CASH_CLOSE: 'CAJA_CERRAR',
+  ATTENDANCE_VIEW: 'ASISTENCIAS_CONSULTAR',
+  ATTENDANCE_REGISTER: 'ASISTENCIAS_REGISTRAR',
+  REPORTS_VIEW: 'REPORTES_DIARIOS_CONSULTAR',
+  SECURITY_VIEW: 'USUARIOS_CONSULTAR',
+  /** Reservado para Fase 3; aún no figura en el contrato recibido. */
+  SPORTS_VIEW: 'DEPORTIVO_CONSULTAR',
 } as const;
