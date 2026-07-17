@@ -6,19 +6,19 @@ Preparar la autenticación real de la web GymBox contra el API Spring Boot, con 
 
 ## Implementación
 
-- `AuthApiService` concentra `login`, `refresh`, `logout` y `me`.
+- `AuthApiService` concentra `login`, `refresh`, `logout` y `me` con los DTOs definitivos del backend.
 - `AuthFacade` orquesta el flujo y `AuthSessionStore` mantiene signals de sesión, usuario, roles y permisos.
 - `AuthSessionStorageService` persiste la sesión actual solo durante la pestaña/navegador (`sessionStorage`, clave `gymbox.auth.session`). No se usa `localStorage`, no se registran tokens y se limpia el storage al salir o recibir un 401.
-- El initializer restaura la sesión y consulta `/auth/me` cuando existe un token. Un 401 invalida la sesión visual; no se implementó refresh automático por falta de confirmación del contrato de refresh.
+- El initializer restaura la sesión y consulta `/auth/me` cuando existe un token. Si el access token venció, el interceptor rota los tokens una única vez y reintenta la solicitud.
 - `authTokenInterceptor` y `traceRequestInterceptor` solo modifican solicitudes internas al `apiBaseUrl`; login y refresh permanecen públicos.
-- `httpErrorInterceptor` normaliza errores. Un 401 de un endpoint protegido limpia sesión y redirige a login con `returnUrl`; un 403 redirige a `/forbidden`.
-- `AuthFacade.logout()` intenta `POST /auth/logout` y limpia localmente aun si el servidor no responde.
+- `httpErrorInterceptor` normaliza errores. Ante 401 de un endpoint protegido coordina un único refresh en curso, reintenta la solicitud una vez y, si falla, limpia sesión y redirige a login con `returnUrl`; un 403 redirige a `/forbidden`.
+- `AuthFacade.logout()` envía el refresh token a `POST /auth/logout` y limpia localmente aun si el servidor no responde.
 - Permisos visuales centralizados en `core/auth/permissions.ts`; menú y rutas los consumen desde `menu.config.ts` y `app.routes.ts`.
 
 ## Flujo de login y restauración
 
-1. Login envía `usernameOrEmail` y contraseña a `POST /api/v1/auth/login`.
-2. La respuesta guarda token, expiración y usuario opcional en el store/sessionStorage.
+1. Login envía `email`, contraseña y `device` opcional a `POST /api/v1/auth/login`.
+2. La respuesta `AuthTokens` guarda access token, refresh token y expiración en el store/sessionStorage.
 3. Se consulta `GET /api/v1/auth/me` para actualizar usuario, roles y permisos antes de navegar al `returnUrl` o dashboard.
 4. Al iniciar la aplicación se restaura la sesión y se valida de nuevo con `/auth/me`.
 
@@ -39,11 +39,11 @@ Para un menú, agregar un `MenuItem` en `core/layout/menu.config.ts` con el mism
 - `POST /api/v1/auth/logout`
 - `GET /api/v1/auth/me`
 
-Los paths están en `core/config/api-endpoints.ts`. El blueprint confirma las rutas, pero queda por confirmar el shape final de `LoginRequest`, `LoginResponse`, `AuthMeResponse` y el transporte definitivo de refresh token.
+Los paths están en `core/config/api-endpoints.ts`. El contrato definitivo está documentado en `docs/arquitectura/dtos_y_refresh_token_backend.md`: login y refresh devuelven `AuthTokens`; `/auth/me` devuelve `UserSnapshot` directamente; logout recibe `{ refreshToken }` y responde `204`.
 
 ## Ambiente y decisiones
 
-`environment.apiBaseUrl` es `/api/v1` para funcionar detrás de proxy; en desarrollo local puede configurarse como `http://localhost:8080/api/v1`. No hay mocks de autenticación ni tokens hardcodeados. La opción de refresh automático se dejó fuera intencionalmente para evitar concurrencia y rotación incorrectas antes de acordar el contrato de backend.
+`environment.apiBaseUrl` es `/api/v1` para funcionar detrás de proxy; en desarrollo local puede configurarse como `http://localhost:8080/api/v1`. No hay mocks de autenticación ni tokens hardcodeados. La coordinación de refresh evita usos concurrentes y nunca reutiliza el refresh token anterior.
 
 ## Validación
 
@@ -54,6 +54,6 @@ No existe una configuración o script de lint en el proyecto inicial.
 
 ## Pendiente para Sprint 2
 
-- Acordar DTOs finales y estrategia de refresh con cookie HttpOnly/Secure si el backend la ofrece.
-- Añadir pruebas de interceptores y del facade con `HttpTestingController` cuando se estabilice el contrato.
+- Añadir pruebas de integración de interceptor/refresh con `HttpTestingController`.
+- Evaluar migrar el refresh token a cookie HttpOnly/Secure si el backend modifica el contrato actual basado en JSON.
 - Comenzar Students sin incorporar reglas de edad, tutor, vigencia o permisos definitivos al frontend.

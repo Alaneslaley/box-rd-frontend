@@ -15,9 +15,9 @@ import { APP_CONFIG } from '../../../core/config/app-config.token';
       <p class="muted">Ingresa con tus credenciales autorizadas.</p>
       @if (error()) { <p class="alert alert-error" role="alert">{{ error() }}</p> }
       <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
-        <label for="username">Correo o usuario</label>
-        <input id="username" type="text" formControlName="usernameOrEmail" autocomplete="username" />
-        @if (form.controls.usernameOrEmail.touched && form.controls.usernameOrEmail.invalid) { <span class="field-error">Ingresa tu correo o usuario.</span> }
+        <label for="email">Correo electrónico</label>
+        <input id="email" type="email" formControlName="email" autocomplete="email" />
+        @if (form.controls.email.touched && form.controls.email.invalid) { <span class="field-error">Ingresa un correo electrónico válido.</span> }
         <label for="password">Contraseña</label>
         <input id="password" type="password" formControlName="password" autocomplete="current-password" />
         @if (form.controls.password.touched && form.controls.password.invalid) { <span class="field-error">La contraseña es obligatoria.</span> }
@@ -34,7 +34,7 @@ export class LoginPageComponent {
   readonly appName = this.config.appName;
   readonly submitting = signal(false);
   readonly error = signal<string | null>(null);
-  readonly form = new FormGroup({ usernameOrEmail: new FormControl('', { nonNullable: true, validators: [Validators.required] }), password: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(6)] }) });
+  readonly form = new FormGroup({ email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }), password: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(6)] }) });
   readonly returnUrl = computed(() => this.route.snapshot.queryParamMap.get('returnUrl') || '/dashboard');
 
   submit(): void {

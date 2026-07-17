@@ -7,7 +7,7 @@ import { LoadingService } from '../http/loading.service';
 @Component({ selector: 'app-topbar', template: `
   <header class="topbar"><div><p class="eyebrow">Administración</p><strong>Operación GymBox</strong></div>
   <div class="topbar-actions">@if (loading.isLoading()) { <span class="loading-inline" role="status">Cargando…</span> }
-    <span class="user-name">{{ session.user()?.fullName || session.user()?.name || session.user()?.username || 'Usuario' }}</span>
+    <span class="user-name">{{ session.user() ? session.user()?.firstName + ' ' + session.user()?.lastName : 'Usuario' }}</span>
     <button class="btn btn-secondary" type="button" (click)="logout()">Cerrar sesión</button>
   </div></header>` })
 export class TopbarComponent {

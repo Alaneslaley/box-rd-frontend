@@ -11,7 +11,7 @@ describe('authGuard', () => {
     expect(result).toEqual({ redirected: true }); expect(router.createUrlTree).toHaveBeenCalled();
   });
   it('permite la ruta con sesión', () => {
-    TestBed.inject(AuthSessionStore).loginSuccess({ accessToken: 'token', user: { id: '1', username: 'admin', fullName: 'Admin', roles: [], permissions: [] } });
+    TestBed.inject(AuthSessionStore).loginSuccess({ tokenType: 'Bearer', accessToken: 'token', refreshToken: 'refresh', expiresIn: 900 });
     expect(TestBed.runInInjectionContext(() => authGuard({} as never, { url: '/students' } as never))).toBe(true);
   });
 });

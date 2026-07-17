@@ -7,12 +7,16 @@ describe('permissionGuard', () => {
   const router = { createUrlTree: vi.fn(() => ({ redirected: true })) };
   beforeEach(() => TestBed.configureTestingModule({ providers: [{ provide: Router, useValue: router }] }));
   it('permite acceso cuando la sesión tiene alguno de los permisos', () => {
-    TestBed.inject(AuthSessionStore).loginSuccess({ accessToken: 'token', user: { id: '1', roles: [], permissions: ['students.read'] } });
+    const store = TestBed.inject(AuthSessionStore);
+    store.loginSuccess({ tokenType: 'Bearer', accessToken: 'token', refreshToken: 'refresh', expiresIn: 900 });
+    store.setCurrentUser({ id: '1', branchId: null, email: 'admin@gymbox.mx', firstName: 'Admin', lastName: 'GymBox', status: 'ACTIVE', mustChangePassword: false, authzVersion: 1, roles: [], permissions: ['students.read'] });
     const result = TestBed.runInInjectionContext(() => permissionGuard({ data: { permissionsAny: ['payments.read', 'students.read'] } } as never, {} as never));
     expect(result).toBe(true);
   });
   it('redirige a forbidden cuando falta el permiso visual', () => {
-    TestBed.inject(AuthSessionStore).loginSuccess({ accessToken: 'token', user: { id: '1', roles: [], permissions: [] } });
+    const store = TestBed.inject(AuthSessionStore);
+    store.loginSuccess({ tokenType: 'Bearer', accessToken: 'token', refreshToken: 'refresh', expiresIn: 900 });
+    store.setCurrentUser({ id: '1', branchId: null, email: 'admin@gymbox.mx', firstName: 'Admin', lastName: 'GymBox', status: 'ACTIVE', mustChangePassword: false, authzVersion: 1, roles: [], permissions: [] });
     const result = TestBed.runInInjectionContext(() => permissionGuard({ data: { permissionsAny: ['students.read'] } } as never, {} as never));
     expect(result).toEqual({ redirected: true });
   });

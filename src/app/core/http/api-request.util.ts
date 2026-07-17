@@ -8,3 +8,7 @@ export function isApiRequest(url: string, config: AppEnvironment): boolean {
 export function isPublicAuthRequest(url: string): boolean {
   return [API_ENDPOINTS.auth.login, API_ENDPOINTS.auth.refresh].some((path) => url.includes(path));
 }
+
+export function isLogoutRequest(url: string): boolean {
+  return url.includes(API_ENDPOINTS.auth.logout);
+}

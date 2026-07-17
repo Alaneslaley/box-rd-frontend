@@ -1,6 +1,6 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { AuthMeResponse, AuthSession, AuthUser } from '../models/user-session.model';
-import { LoginResponse } from './auth-api.service';
+import { AuthMeResponse, AuthSession } from '../models/user-session.model';
+import { AuthTokens } from './auth-api.service';
 import { AuthSessionStorageService } from './auth-session-storage.service';
 
 const EMPTY_SESSION: AuthSession = {
@@ -23,11 +23,11 @@ export class AuthSessionStore {
   readonly permissions = computed(() => this.state().user?.permissions ?? []);
   readonly isAuthenticated = computed(() => this.state().isAuthenticated);
 
-  loginSuccess(response: LoginResponse): void {
+  loginSuccess(response: AuthTokens): void {
     const session: AuthSession = {
       isAuthenticated: Boolean(response.accessToken), accessToken: response.accessToken,
-      refreshToken: response.refreshToken ?? null, user: response.user ?? null,
-      expiresAt: response.expiresIn ? Date.now() + response.expiresIn * 1000 : null,
+      refreshToken: response.refreshToken, user: this.state().user,
+      expiresAt: Date.now() + response.expiresIn * 1000,
     };
     this.setSession(session);
   }
@@ -52,8 +52,7 @@ export class AuthSessionStore {
   hasRole(role: string): boolean { return this.roles().includes(role); }
   hasAnyRole(roles: readonly string[]): boolean { return roles.some((role) => this.hasRole(role)); }
 
-  setCurrentUser(response: AuthMeResponse): void {
-    const user: AuthUser = { ...response.user, roles: response.roles, permissions: response.permissions };
+  setCurrentUser(user: AuthMeResponse): void {
     this.state.update((current) => ({ ...current, user }));
     this.persist();
   }

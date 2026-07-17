@@ -5,14 +5,15 @@ export interface Permission {
 
 export interface AuthUser {
   id: string;
-  name?: string;
-  fullName?: string;
-  email?: string;
-  username?: string;
-  branchId?: string;
+  branchId: string | null;
+  email: string;
+  firstName: string;
+  lastName: string;
+  status: 'ACTIVE' | string;
+  mustChangePassword: boolean;
+  authzVersion: number;
   roles: string[];
   permissions: string[];
-  active?: boolean;
 }
 
 export interface AuthSession {
@@ -26,8 +27,5 @@ export interface AuthSession {
 /** Alias de compatibilidad para los consumidores creados en Sprint 0. */
 export type UserSession = AuthSession;
 
-export interface AuthMeResponse {
-  user: AuthUser;
-  roles: string[];
-  permissions: string[];
-}
+/** Respuesta directa de GET /auth/me (UserSnapshot del backend). */
+export type AuthMeResponse = AuthUser;

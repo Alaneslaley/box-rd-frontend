@@ -3,13 +3,16 @@ import { Observable, catchError, finalize, map, of, switchMap, tap, throwError }
 import { ApiError } from '../models/api-error.model';
 import { AuthApiService, LoginRequest } from './auth-api.service';
 import { AuthSessionStore } from './auth-session.store';
+import { AuthRefreshService } from './auth-refresh.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthFacade {
   private readonly api = inject(AuthApiService);
   private readonly store = inject(AuthSessionStore);
+  private readonly refresh = inject(AuthRefreshService);
 
   login(credentials: LoginRequest): Observable<void> {
+    this.store.clearSession();
     return this.api.login(credentials).pipe(
       tap((response) => this.store.loginSuccess(response)),
       switchMap(() => this.loadCurrentUser()),
@@ -17,7 +20,9 @@ export class AuthFacade {
   }
 
   logout(): Observable<void> {
-    return this.api.logout().pipe(
+    const refreshToken = this.store.refreshToken();
+    if (!refreshToken) { this.store.clearSession(); return of(undefined); }
+    return this.api.logout(refreshToken).pipe(
       catchError(() => of(undefined)),
       finalize(() => this.store.clearSession()),
     );
@@ -33,8 +38,6 @@ export class AuthFacade {
   restoreSession(): void { this.store.restoreSession(); }
 
   refreshSession(): Observable<void> {
-    const refreshToken = this.store.refreshToken();
-    if (!refreshToken) return throwError(() => ({ code: 'REFRESH_TOKEN_UNAVAILABLE', message: 'No hay una sesión para renovar.' } satisfies ApiError));
-    return this.api.refresh(refreshToken).pipe(tap((response) => this.store.loginSuccess(response)), switchMap(() => this.loadCurrentUser()));
+    return this.refresh.refreshOnce();
   }
 }

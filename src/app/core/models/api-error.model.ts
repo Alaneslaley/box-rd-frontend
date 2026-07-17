@@ -1,12 +1,7 @@
-export interface ApiFieldViolation {
-  field?: string;
-  message: string;
-}
-
 export interface ApiError {
   code: string;
   message: string;
-  details?: ApiFieldViolation[];
+  details?: Record<string, string>;
   timestamp?: string;
   traceId?: string;
   status?: number;

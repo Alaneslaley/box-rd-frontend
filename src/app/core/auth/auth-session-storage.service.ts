@@ -14,7 +14,9 @@ export class AuthSessionStorageService {
       const value = sessionStorage.getItem(STORAGE_KEY);
       if (!value) return null;
       const session = JSON.parse(value) as AuthSession;
-      return session.accessToken && !this.isExpired(session) ? session : null;
+      // Un access token vencido se conserva para que el initializer solicite
+      // una rotación con el refresh token; el backend decide si este último sigue vigente.
+      return session.isAuthenticated && typeof session.accessToken === 'string' && typeof session.refreshToken === 'string' ? session : null;
     } catch { return null; }
   }
 
@@ -26,6 +28,4 @@ export class AuthSessionStorageService {
   clear(): void {
     if (this.isBrowser) sessionStorage.removeItem(STORAGE_KEY);
   }
-
-  private isExpired(session: AuthSession): boolean { return Boolean(session.expiresAt && session.expiresAt <= Date.now()); }
 }
