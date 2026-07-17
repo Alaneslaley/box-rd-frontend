@@ -1,0 +1,4 @@
+import { Component, input } from '@angular/core';
+
+@Component({ selector: 'app-page-header', template: `<header class="page-header"><div><p class="eyebrow">{{ phase() }}</p><h1>{{ title() }}</h1><p>{{ description() }}</p></div><ng-content /></header>` })
+export class PageHeaderComponent { readonly title = input.required<string>(); readonly description = input.required<string>(); readonly phase = input('Fase 0'); }
