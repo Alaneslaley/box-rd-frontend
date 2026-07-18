@@ -3,6 +3,8 @@ import { MEMBERSHIPS_ROUTES } from '../../features/memberships/memberships.route
 import { PLANS_ROUTES } from '../../features/plans/plans.routes';
 import { PAYMENTS_ROUTES } from '../../features/payments/payments.routes';
 import { CASH_ROUTES } from '../../features/cash/cash.routes';
+import { ATTENDANCE_ROUTES } from '../../features/attendance/attendance.routes';
+import { INSTRUCTOR_ROUTES } from '../../features/instructor/instructor.routes';
 import { APP_MENU } from './menu.config';
 
 describe('menú y permisos de Sprint 3', () => {
@@ -31,5 +33,17 @@ describe('menú y permisos de Sprint 3', () => {
     expect(PAYMENTS_ROUTES.find((route) => route.path === ':id/receipt')?.data?.['permissionsAny']).toEqual([PERMISSIONS.PAYMENTS_RECEIPT, PERMISSIONS.PAYMENTS_DETAIL]);
     expect(CASH_ROUTES.find((route) => route.path === 'open')?.data?.['permissionsAny']).toEqual([PERMISSIONS.CASH_OPEN]);
     expect(CASH_ROUTES.find((route) => route.path === 'close')?.data?.['permissionsAny']).toEqual([PERMISSIONS.CASH_CLOSE]);
+  });
+
+  it('muestra asistencia, check-in e instructor con los permisos reales', () => {
+    expect(APP_MENU.find((item) => item.route === '/attendance')?.permissionsAny).toEqual([PERMISSIONS.ATTENDANCE_READ]);
+    expect(APP_MENU.find((item) => item.route === '/attendance/check-in')?.permissionsAny).toEqual([PERMISSIONS.ATTENDANCE_CHECKIN]);
+    expect(APP_MENU.find((item) => item.route === '/instructor/today')?.permissionsAny).toEqual([PERMISSIONS.INSTRUCTOR_TODAY, PERMISSIONS.ATTENDANCE_READ]);
+  });
+
+  it('protege las rutas de asistencia e instructor', () => {
+    expect(ATTENDANCE_ROUTES.find((route) => route.path === 'today')?.data?.['permissionsAny']).toEqual([PERMISSIONS.ATTENDANCE_READ]);
+    expect(ATTENDANCE_ROUTES.find((route) => route.path === 'check-in')?.data?.['permissionsAny']).toEqual([PERMISSIONS.ATTENDANCE_CHECKIN]);
+    expect(INSTRUCTOR_ROUTES.find((route) => route.path === 'today')?.data?.['permissionsAny']).toEqual([PERMISSIONS.INSTRUCTOR_TODAY, PERMISSIONS.ATTENDANCE_READ]);
   });
 });

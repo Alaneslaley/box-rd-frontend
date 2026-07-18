@@ -11,4 +11,7 @@ export const API_ENDPOINTS = {
   memberships: '/memberships',
   payments: '/payments',
   cashRegister: '/cash-register',
+  attendance: '/attendance',
+  instructor: '/instructor',
+  media: '/media',
 } as const;

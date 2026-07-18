@@ -23,8 +23,14 @@ export const PERMISSIONS = {
   CASH_VIEW: 'CAJA_CONSULTAR',
   CASH_OPEN: 'CAJA_ABRIR',
   CASH_CLOSE: 'CAJA_CERRAR',
+  /** Alias conceptuales del frontend mapeados al catálogo real del backend. */
+  ATTENDANCE_READ: 'ASISTENCIAS_CONSULTAR',
   ATTENDANCE_VIEW: 'ASISTENCIAS_CONSULTAR',
+  ATTENDANCE_STUDENT: 'ASISTENCIAS_CONSULTAR',
+  ATTENDANCE_CHECKIN: 'ASISTENCIAS_REGISTRAR',
   ATTENDANCE_REGISTER: 'ASISTENCIAS_REGISTRAR',
+  /** El contrato actual no define un permiso exclusivo de instructor. */
+  INSTRUCTOR_TODAY: 'ASISTENCIAS_CONSULTAR',
   REPORTS_VIEW: 'REPORTES_DIARIOS_CONSULTAR',
   SECURITY_VIEW: 'USUARIOS_CONSULTAR',
   /** Reservado para Fase 3; aún no figura en el contrato recibido. */
