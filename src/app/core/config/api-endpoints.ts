@@ -14,4 +14,7 @@ export const API_ENDPOINTS = {
   attendance: '/attendance',
   instructor: '/instructor',
   media: '/media',
+  reports: {
+    adminDashboard: '/reports/admin/dashboard',
+  },
 } as const;

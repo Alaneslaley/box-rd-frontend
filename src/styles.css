@@ -93,3 +93,17 @@ a { color: var(--color-primary); }
 .badge-row { display: flex; gap: .45rem; flex-wrap: wrap; }
 .attendance-student-actions { justify-content: start; margin-top: 1rem; padding: 0; }
 @media (max-width: 700px) { .checkin-result dl, .instructor-grid { grid-template-columns: 1fr; }.checkin-identity, .instructor-student-card { align-items: stretch; flex-direction: column; }.student-photo { width: 6rem; height: 6rem; }.attendance-checkin-form { max-width: none; } }
+
+/* Dashboard & Reports Sprint 6 */
+.dashboard-updated { color: var(--color-muted); font-size: .82rem; margin: -.9rem 0 1.25rem; text-align: right; }
+.dashboard-context { display: flex; justify-content: space-between; gap: 1rem; color: var(--color-muted); background: #f1f5f9; border: 1px solid var(--color-border); border-radius: .55rem; margin-bottom: 1rem; padding: .7rem 1rem; font-size: .84rem; }
+.dashboard-context strong { color: var(--color-text); overflow-wrap: anywhere; }
+.kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+.kpi-card { min-height: 10rem; border: 1px solid var(--color-border); border-left: .35rem solid #64748b; border-radius: var(--radius); background: var(--color-surface); box-shadow: var(--shadow-card); color: var(--color-text); display: flex; flex-direction: column; gap: .4rem; padding: 1.1rem; text-decoration: none; }
+a.kpi-card:hover { box-shadow: 0 6px 18px rgb(15 23 42 / 14%); transform: translateY(-1px); }
+.kpi-tone-primary { border-left-color: var(--color-primary); }.kpi-tone-success { border-left-color: var(--color-success); }.kpi-tone-warning { border-left-color: var(--color-warning); }.kpi-tone-danger { border-left-color: var(--color-danger); }
+.kpi-title { color: var(--color-muted); font-size: .82rem; font-weight: 700; }.kpi-value { font-size: 2rem; line-height: 1.15; }.kpi-subtitle { color: var(--color-muted); font-size: .78rem; line-height: 1.4; }.kpi-link { color: var(--color-primary); font-size: .78rem; font-weight: 700; margin-top: auto; }
+.dashboard-section { margin-top: 1.5rem; }.income-totals { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 1rem; }.income-total { border-left: .35rem solid var(--color-success); display: grid; gap: .45rem; }.income-total span { color: var(--color-muted); font-size: .82rem; font-weight: 700; }.income-total strong { color: var(--color-success); font-size: 1.45rem; }.income-method-table { margin-top: 0; }.income-method-table table { min-width: 38rem; }
+.quick-actions, .report-catalog { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }.quick-action, .report-card { color: var(--color-text); display: grid; gap: .35rem; text-decoration: none; }.quick-action:hover, .report-card-active:hover { border-color: #93c5fd; }.quick-action span, .report-card p { color: var(--color-muted); font-size: .84rem; }.report-card h2 { margin: 0; }.report-card .btn { justify-self: start; }.report-card:not(.report-card-active) { box-shadow: none; background: #f8fafc; }
+@media (max-width: 950px) { .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }.quick-actions, .report-catalog { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .dashboard-context { align-items: flex-start; flex-direction: column; }.dashboard-updated { text-align: left; }.kpi-grid, .quick-actions, .report-catalog { grid-template-columns: 1fr; } }

@@ -5,6 +5,8 @@ import { PAYMENTS_ROUTES } from '../../features/payments/payments.routes';
 import { CASH_ROUTES } from '../../features/cash/cash.routes';
 import { ATTENDANCE_ROUTES } from '../../features/attendance/attendance.routes';
 import { INSTRUCTOR_ROUTES } from '../../features/instructor/instructor.routes';
+import { DASHBOARD_ROUTES } from '../../features/dashboard/dashboard.routes';
+import { REPORTS_ROUTES } from '../../features/reports/reports.routes';
 import { APP_MENU } from './menu.config';
 
 describe('menú y permisos de Sprint 3', () => {
@@ -45,5 +47,15 @@ describe('menú y permisos de Sprint 3', () => {
     expect(ATTENDANCE_ROUTES.find((route) => route.path === 'today')?.data?.['permissionsAny']).toEqual([PERMISSIONS.ATTENDANCE_READ]);
     expect(ATTENDANCE_ROUTES.find((route) => route.path === 'check-in')?.data?.['permissionsAny']).toEqual([PERMISSIONS.ATTENDANCE_CHECKIN]);
     expect(INSTRUCTOR_ROUTES.find((route) => route.path === 'today')?.data?.['permissionsAny']).toEqual([PERMISSIONS.INSTRUCTOR_TODAY, PERMISSIONS.ATTENDANCE_READ]);
+  });
+
+  it('muestra Dashboard y Reportes con los aliases del permiso real', () => {
+    expect(APP_MENU.find((item) => item.route === '/dashboard')?.permissionsAny).toEqual([PERMISSIONS.DASHBOARD_VIEW, PERMISSIONS.REPORTS_ADMIN_DASHBOARD]);
+    expect(APP_MENU.find((item) => item.route === '/reports')?.permissionsAny).toEqual([PERMISSIONS.REPORTS_READ, PERMISSIONS.REPORTS_ADMIN_DASHBOARD]);
+  });
+
+  it('protege el dashboard y el reporte administrativo', () => {
+    expect(DASHBOARD_ROUTES.find((route) => route.path === '')?.data?.['permissionsAny']).toEqual([PERMISSIONS.DASHBOARD_VIEW, PERMISSIONS.REPORTS_ADMIN_DASHBOARD]);
+    expect(REPORTS_ROUTES.find((route) => route.path === 'admin-dashboard')?.data?.['permissionsAny']).toEqual([PERMISSIONS.REPORTS_ADMIN_DASHBOARD]);
   });
 });

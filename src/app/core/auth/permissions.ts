@@ -1,6 +1,9 @@
 /** Códigos canónicos devueltos por GET /api/v1/auth/me. */
 export const PERMISSIONS = {
+  /** Alias conceptuales del dashboard mapeados al permiso real actual. */
   DASHBOARD_VIEW: 'REPORTES_DIARIOS_CONSULTAR',
+  REPORTS_ADMIN_DASHBOARD: 'REPORTES_DIARIOS_CONSULTAR',
+  REPORTS_READ: 'REPORTES_DIARIOS_CONSULTAR',
   STUDENTS_VIEW: 'ALUMNOS_CONSULTAR',
   STUDENTS_DETAIL: 'ALUMNOS_CONSULTAR',
   STUDENTS_CREATE: 'ALUMNOS_CREAR',
