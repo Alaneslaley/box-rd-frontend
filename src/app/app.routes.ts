@@ -19,7 +19,7 @@ export const routes: Routes = [
     feature('attendance', [PERMISSIONS.ATTENDANCE_READ, PERMISSIONS.ATTENDANCE_CHECKIN], () => import('./features/attendance/attendance.routes').then((m) => m.ATTENDANCE_ROUTES)),
     feature('instructor', [PERMISSIONS.INSTRUCTOR_TODAY, PERMISSIONS.ATTENDANCE_READ], () => import('./features/instructor/instructor.routes').then((m) => m.INSTRUCTOR_ROUTES)),
     feature('reports', [PERMISSIONS.REPORTS_READ, PERMISSIONS.REPORTS_ADMIN_DASHBOARD], () => import('./features/reports/reports.routes').then((m) => m.REPORTS_ROUTES)),
-    feature('security', [PERMISSIONS.SECURITY_VIEW], () => import('./features/security/security.routes').then((m) => m.SECURITY_ROUTES)),
+    feature('security', [PERMISSIONS.SECURITY_READ, PERMISSIONS.USERS_READ], () => import('./features/security/security.routes').then((m) => m.SECURITY_ROUTES)),
     feature('sports', [PERMISSIONS.SPORTS_VIEW], () => import('./features/sports/sports.routes').then((m) => m.SPORTS_ROUTES)),
     { path: 'forbidden', title: 'Acceso no disponible', loadComponent: () => import('./features/forbidden/forbidden-page.component').then((m) => m.ForbiddenPageComponent) },
   ] },

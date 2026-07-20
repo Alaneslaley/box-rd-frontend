@@ -17,4 +17,6 @@ export const API_ENDPOINTS = {
   reports: {
     adminDashboard: '/reports/admin/dashboard',
   },
+  users: '/users',
+  roles: '/roles',
 } as const;

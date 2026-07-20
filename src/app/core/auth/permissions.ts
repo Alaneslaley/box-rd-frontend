@@ -35,7 +35,15 @@ export const PERMISSIONS = {
   /** El contrato actual no define un permiso exclusivo de instructor. */
   INSTRUCTOR_TODAY: 'ASISTENCIAS_CONSULTAR',
   REPORTS_VIEW: 'REPORTES_DIARIOS_CONSULTAR',
+  /** Alias de Seguridad mapeados al catálogo real disponible en el backend. */
+  SECURITY_READ: 'USUARIOS_CONSULTAR',
   SECURITY_VIEW: 'USUARIOS_CONSULTAR',
+  USERS_READ: 'USUARIOS_CONSULTAR',
+  USERS_CREATE: 'USUARIOS_CREAR',
+  USERS_STATUS: 'USUARIOS_DESACTIVAR',
+  USERS_ROLES: 'USUARIOS_MODIFICAR',
+  /** No existe un permiso exclusivo para roles en el catálogo actual. */
+  ROLES_READ: 'USUARIOS_CONSULTAR',
   /** Reservado para Fase 3; aún no figura en el contrato recibido. */
   SPORTS_VIEW: 'DEPORTIVO_CONSULTAR',
 } as const;

@@ -12,6 +12,6 @@ export const APP_MENU: MenuItem[] = [
   { label: 'Registrar check-in', route: '/attendance/check-in', permissionsAny: [PERMISSIONS.ATTENDANCE_CHECKIN], phase: 'Sprint 5' },
   { label: 'Instructor hoy', route: '/instructor/today', permissionsAny: [PERMISSIONS.INSTRUCTOR_TODAY, PERMISSIONS.ATTENDANCE_READ], phase: 'Sprint 5' },
   { label: 'Reportes', route: '/reports', permissionsAny: [PERMISSIONS.REPORTS_READ, PERMISSIONS.REPORTS_ADMIN_DASHBOARD], phase: 'Sprint 6' },
-  { label: 'Seguridad', route: '/security', permissionsAny: [PERMISSIONS.SECURITY_VIEW], phase: 'Fase 1' },
+  { label: 'Seguridad', route: '/security', permissionsAny: [PERMISSIONS.SECURITY_READ, PERMISSIONS.USERS_READ], phase: 'Sprint 7' },
   { label: 'Deportivo', route: '/sports', permissionsAny: [PERMISSIONS.SPORTS_VIEW], phase: 'Fase 3' },
 ];

@@ -7,6 +7,7 @@ import { ATTENDANCE_ROUTES } from '../../features/attendance/attendance.routes';
 import { INSTRUCTOR_ROUTES } from '../../features/instructor/instructor.routes';
 import { DASHBOARD_ROUTES } from '../../features/dashboard/dashboard.routes';
 import { REPORTS_ROUTES } from '../../features/reports/reports.routes';
+import { SECURITY_ROUTES } from '../../features/security/security.routes';
 import { APP_MENU } from './menu.config';
 
 describe('menú y permisos de Sprint 3', () => {
@@ -57,5 +58,14 @@ describe('menú y permisos de Sprint 3', () => {
   it('protege el dashboard y el reporte administrativo', () => {
     expect(DASHBOARD_ROUTES.find((route) => route.path === '')?.data?.['permissionsAny']).toEqual([PERMISSIONS.DASHBOARD_VIEW, PERMISSIONS.REPORTS_ADMIN_DASHBOARD]);
     expect(REPORTS_ROUTES.find((route) => route.path === 'admin-dashboard')?.data?.['permissionsAny']).toEqual([PERMISSIONS.REPORTS_ADMIN_DASHBOARD]);
+  });
+
+  it('muestra Seguridad y protege las acciones de usuarios y roles', () => {
+    expect(APP_MENU.find((item) => item.route === '/security')?.permissionsAny).toEqual([PERMISSIONS.SECURITY_READ, PERMISSIONS.USERS_READ]);
+    expect(SECURITY_ROUTES.find((route) => route.path === 'users')?.data?.['permissionsAny']).toEqual([PERMISSIONS.USERS_READ]);
+    expect(SECURITY_ROUTES.find((route) => route.path === 'users/new')?.data?.['permissionsAny']).toEqual([PERMISSIONS.USERS_CREATE]);
+    expect(SECURITY_ROUTES.find((route) => route.path === 'users/:id/roles')?.data?.['permissionsAny']).toEqual([PERMISSIONS.USERS_ROLES]);
+    expect(SECURITY_ROUTES.find((route) => route.path === 'users/:id/status')?.data?.['permissionsAny']).toEqual([PERMISSIONS.USERS_STATUS]);
+    expect(SECURITY_ROUTES.find((route) => route.path === 'roles')?.data?.['permissionsAny']).toEqual([PERMISSIONS.ROLES_READ]);
   });
 });

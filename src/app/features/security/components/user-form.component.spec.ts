@@ -1,0 +1,10 @@
+import { TestBed } from '@angular/core/testing';
+import { UserFormComponent } from './user-form.component';
+
+describe('UserFormComponent', () => {
+  async function create() { await TestBed.configureTestingModule({ imports: [UserFormComponent] }).compileComponents(); const fixture = TestBed.createComponent(UserFormComponent); fixture.componentRef.setInput('roles', [{ id: 'role-id', code: 'ADMINISTRADOR', name: 'Administrador', description: 'Administra', permissions: [] }]); fixture.componentRef.setInput('initialBranchId', '123e4567-e89b-12d3-a456-426614174000'); fixture.detectChanges(); return { fixture, component: fixture.componentInstance }; }
+  it('invalida correo vacío y con formato incorrecto', async () => { const { component } = await create(); component.form.controls.email.setValue(''); expect(component.form.controls.email.invalid).toBe(true); component.form.controls.email.setValue('correo-invalido'); expect(component.form.controls.email.invalid).toBe(true); });
+  it('invalida contraseña menor de 12 caracteres', async () => { const { component } = await create(); component.form.controls.password.setValue('corta'); expect(component.form.controls.password.invalid).toBe(true); });
+  it('invalida selección de roles vacía', async () => { const { component } = await create(); component.form.controls.roles.setValue([]); expect(component.form.controls.roles.invalid).toBe(true); });
+  it('emite solo los campos del contrato', async () => { const { component } = await create(); const emitted = vi.fn(); component.submitted.subscribe(emitted); component.form.setValue({ branchId: '123e4567-e89b-12d3-a456-426614174000', firstName: ' Ana ', lastName: ' Box ', email: 'ana@gymbox.com', phone: '', password: 'contraseña-segura', roles: ['ADMINISTRADOR'] }); component.submitForm(); expect(emitted).toHaveBeenCalledWith({ branchId: '123e4567-e89b-12d3-a456-426614174000', firstName: 'Ana', lastName: 'Box', email: 'ana@gymbox.com', password: 'contraseña-segura', roles: ['ADMINISTRADOR'] }); expect(component.form.controls.password.value).toBe(''); });
+});
