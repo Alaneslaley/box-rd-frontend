@@ -7,15 +7,15 @@ const NOT_BLANK_PATTERN = /\S/;
 
 @Component({ selector: 'app-user-form', imports: [ReactiveFormsModule], template: `
   <form class="student-form user-form" [formGroup]="form" (ngSubmit)="submitForm()" novalidate>
-    <section class="card form-section"><h2>Datos del usuario</h2><p>La contraseña se envía solo al backend y no se conserva después del registro.</p><div class="form-grid">
-      <div class="form-field form-field-wide"><label for="user-branch">Sucursal (UUID) *</label><input id="user-branch" formControlName="branchId" maxlength="36" placeholder="UUID de la sucursal" />@if (invalid('branchId')) { <span class="field-error">Ingresa el UUID de una sucursal.</span> }<small class="field-help">No hay un endpoint de sucursales disponible para un selector.</small></div>
+    <section class="card form-section"><h2>Datos del usuario</h2><p>La contraseña temporal se usa únicamente para crear la cuenta.</p><div class="form-grid">
+      <div class="form-field form-field-wide"><label for="user-branch">Sucursal asignada *</label><input id="user-branch" formControlName="branchId" maxlength="36" placeholder="Identificador de la sucursal" />@if (invalid('branchId')) { <span class="field-error">Ingresa un identificador de sucursal válido.</span> }<small class="field-help">Selecciona la sucursal correspondiente al crear la cuenta.</small></div>
       <div class="form-field"><label for="user-first-name">Nombre *</label><input id="user-first-name" formControlName="firstName" maxlength="100" />@if (invalid('firstName')) { <span class="field-error">El nombre es obligatorio y admite máximo 100 caracteres.</span> }</div>
       <div class="form-field"><label for="user-last-name">Apellidos *</label><input id="user-last-name" formControlName="lastName" maxlength="120" />@if (invalid('lastName')) { <span class="field-error">Los apellidos son obligatorios y admiten máximo 120 caracteres.</span> }</div>
       <div class="form-field"><label for="user-email">Correo *</label><input id="user-email" type="email" formControlName="email" maxlength="254" autocomplete="email" />@if (invalid('email')) { <span class="field-error">Captura un correo válido de máximo 254 caracteres.</span> }</div>
       <div class="form-field"><label for="user-phone">Teléfono</label><input id="user-phone" formControlName="phone" maxlength="25" autocomplete="tel" />@if (invalid('phone')) { <span class="field-error">El teléfono admite máximo 25 caracteres.</span> }</div>
       <div class="form-field form-field-wide"><label for="user-password">Contraseña temporal *</label><input id="user-password" type="password" formControlName="password" minlength="12" maxlength="128" autocomplete="new-password" />@if (invalid('password')) { <span class="field-error">La contraseña debe tener entre 12 y 128 caracteres.</span> }</div>
     </div></section>
-    <section class="card form-section"><h2>Roles *</h2><p>Los permisos efectivos y la autorización final son responsabilidad del backend.</p>
+    <section class="card form-section"><h2>Roles *</h2><p>Selecciona los roles necesarios para esta cuenta.</p>
       @if (!roles().length) { <p class="muted">No hay roles disponibles para seleccionar.</p> }
       @else { <div class="role-option-grid">@for (role of roles(); track role.id) { <label class="role-option"><input type="checkbox" [checked]="form.controls.roles.value.includes(role.code)" (change)="toggleRole(role.code, $any($event.target).checked)" /><span><strong>{{ role.name || role.code }}</strong><small>{{ role.code }} · {{ role.description || 'Sin descripción' }}</small></span></label> }</div> }
       @if (invalid('roles')) { <span class="field-error">Selecciona al menos un rol.</span> }

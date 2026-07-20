@@ -5,7 +5,7 @@ import { CloseCashRegisterRequest } from '../models/cash-register.models';
 const CURRENCY_PATTERN = /^[A-Z]{3}$/;
 
 @Component({ selector: 'app-cash-close-form', imports: [ReactiveFormsModule], template: `
-  <form class="student-form" [formGroup]="form" (ngSubmit)="submitForm()" novalidate><section class="card form-section"><h2>Conteo de cierre</h2><p>La diferencia definitiva será la devuelta por el backend.</p><div class="form-grid">
+  <form class="student-form" [formGroup]="form" (ngSubmit)="submitForm()" novalidate><section class="card form-section"><h2>Conteo de cierre</h2><p>La diferencia se mostrará cuando se complete el cierre.</p><div class="form-grid">
     <div class="form-field"><label for="counted-cash">Efectivo contado *</label><input id="counted-cash" type="number" min="0" step="0.01" formControlName="countedCash" />@if (invalid('countedCash')) { <span class="field-error">Ingresa un monto igual o mayor que cero.</span> }</div>
     <div class="form-field"><label for="close-currency">Moneda *</label><input id="close-currency" formControlName="currency" minlength="3" maxlength="3" />@if (invalid('currency')) { <span class="field-error">Usa un código ISO de tres letras mayúsculas.</span> }</div>
     <div class="form-field form-field-wide"><label for="close-notes">Notas</label><textarea id="close-notes" formControlName="notes" maxlength="500" rows="4"></textarea>@if (invalid('notes')) { <span class="field-error">Las notas admiten máximo 500 caracteres.</span> }</div>

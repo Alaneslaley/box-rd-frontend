@@ -13,7 +13,7 @@ import { cashRegisterErrorMessage } from '../models/cash-register-error-message'
 import { CloseCashRegisterRequest } from '../models/cash-register.models';
 
 @Component({ selector: 'app-cash-close-page', imports: [RouterLink, PageHeaderComponent, LoadingStateComponent, EmptyStateComponent, ErrorStateComponent, CashCloseFormComponent], template: `
-  <app-page-header title="Cerrar caja" description="Captura el efectivo contado; el backend determinará la diferencia." phase="Sprint 4" />
+  <app-page-header title="Cerrar caja" description="Captura el efectivo contado para finalizar el turno." />
   @if (facade.loading()) { <app-loading-state message="Cargando caja actual…" /> }
   @else if (facade.error(); as error) { <app-error-state [message]="errorMessage(error)" [traceId]="error.traceId"><a class="btn btn-secondary" routerLink="/cash">Volver</a></app-error-state> }
   @else if (facade.noOpenRegister()) { <app-empty-state title="No hay caja abierta para cerrar" description="Consulta el estado de caja o abre una nueva caja."><a class="btn btn-secondary" routerLink="/cash">Volver a caja</a></app-empty-state> }

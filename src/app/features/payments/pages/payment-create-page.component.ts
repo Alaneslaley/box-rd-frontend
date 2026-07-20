@@ -15,7 +15,7 @@ import { paymentErrorMessage } from '../models/payment-error-message';
 import { RegisterPaymentRequest } from '../models/payment.models';
 
 @Component({ selector: 'app-payment-create-page', imports: [PageHeaderComponent, LoadingStateComponent, EmptyStateComponent, ErrorStateComponent, PaymentFormComponent], template: `
-  <app-page-header title="Registrar pago" description="Selecciona una membresía; importe, folio, concepto y recibo serán definidos por el backend." phase="Sprint 4" />
+  <app-page-header title="Registrar pago" description="Selecciona una membresía, el método y la fecha efectiva." />
   @if (loadingMemberships()) { <app-loading-state message="Cargando membresías…" /> }
   @else { @if (loadError(); as message) { <app-error-state title="No fue posible cargar el catálogo de membresías" [message]="message" [traceId]="traceId()"><button class="btn btn-secondary" type="button" (click)="loadMemberships()">Reintentar</button></app-error-state> }
     @if (!loadError() || initialMembershipId) { @if (saveError(); as message) { <app-error-state title="No fue posible registrar el pago" [message]="message" [traceId]="traceId()" /> }

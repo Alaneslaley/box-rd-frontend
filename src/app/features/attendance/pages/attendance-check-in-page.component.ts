@@ -16,7 +16,7 @@ import { attendanceErrorMessage } from '../models/attendance-error-message';
 import { attendanceLevelLabel, attendanceStatusLabel, attendanceStatusTone, checkInDecisionLabel, checkInDecisionTone, membershipSnapshotLabel, membershipSnapshotTone } from '../models/attendance-labels';
 
 @Component({ selector: 'app-attendance-check-in-page', imports: [RouterLink, PageHeaderComponent, LoadingStateComponent, ErrorStateComponent, StatusBadgeComponent, ProtectedMediaImageComponent, AttendanceCheckInFormComponent], template: `
-  <app-page-header title="Registrar check-in" description="Selecciona al alumno; el backend decide y registra la asistencia." phase="Sprint 5"><a class="btn btn-secondary" routerLink="/attendance">Volver</a></app-page-header>
+  <app-page-header title="Registrar check-in" description="Selecciona al alumno para registrar su asistencia."><a class="btn btn-secondary" routerLink="/attendance">Volver</a></app-page-header>
   @if (studentsLoading()) { <app-loading-state message="Cargando alumnos…" /> }
   @else {
     @if (studentsError(); as message) { <app-error-state title="No fue posible cargar el catálogo" [message]="message" [traceId]="studentsTraceId()"><button class="btn btn-secondary" type="button" (click)="loadStudents()">Reintentar</button></app-error-state> }
@@ -24,7 +24,7 @@ import { attendanceLevelLabel, attendanceStatusLabel, attendanceStatusTone, chec
   }
   @if (submitError(); as message) { <app-error-state title="No fue posible registrar el check-in" [message]="message" [traceId]="submitTraceId()" /> }
   @if (facade.lastCheckIn(); as result) {
-    <section class="card checkin-result" aria-live="polite"><div class="checkin-identity"><app-protected-media-image [fileId]="result.photoFileId" [name]="result.studentName" [alt]="'Foto de ' + result.studentName" /><div><p class="eyebrow">Resultado del backend</p><h2>{{ result.studentName }}</h2><app-status-badge [label]="decisionLabel(result.decision)" [tone]="decisionTone(result.decision)" /></div></div>
+    <section class="card checkin-result" aria-live="polite"><div class="checkin-identity"><app-protected-media-image [fileId]="result.photoFileId" [name]="result.studentName" [alt]="'Foto de ' + result.studentName" /><div><p class="eyebrow">Resultado del registro</p><h2>{{ result.studentName }}</h2><app-status-badge [label]="decisionLabel(result.decision)" [tone]="decisionTone(result.decision)" /></div></div>
       <dl><div><dt>Estado de asistencia</dt><dd><app-status-badge [label]="statusLabel(result.attendance.status)" [tone]="statusTone(result.attendance.status)" /></dd></div><div><dt>Registro</dt><dd>{{ dateTime(result.attendance.checkedInAt) }}</dd></div><div><dt>Edad</dt><dd>{{ result.age }} años · {{ result.ageCategory }}</dd></div><div><dt>Nivel</dt><dd>{{ levelLabel(result.level) }}</dd></div><div><dt>Membresía</dt><dd><app-status-badge [label]="membershipLabel(result.membershipStatus)" [tone]="membershipTone(result.membershipStatus)" /></dd></div><div><dt>Vencimiento</dt><dd>{{ result.membershipEndDate || 'No disponible' }}</dd></div></dl>
       <div class="form-actions"><a class="btn btn-secondary" [routerLink]="['/attendance/student', result.attendance.studentId]">Ver historial</a></div>
     </section>

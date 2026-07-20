@@ -17,7 +17,7 @@ function optionalPositiveInteger(control: AbstractControl<number | null>): Valid
   imports: [ReactiveFormsModule],
   template: `
     <form class="student-form" [formGroup]="form" (ngSubmit)="submitForm()" novalidate>
-      <section class="card form-section"><h2>Datos del plan</h2><p>La vigencia y aplicación final son determinadas por el backend.</p><div class="form-grid">
+      <section class="card form-section"><h2>Datos del plan</h2><p>Define la información comercial del plan.</p><div class="form-grid">
         <div class="form-field"><label for="plan-name">Nombre *</label><input id="plan-name" formControlName="name" maxlength="120" />@if (invalid('name')) { <span class="field-error">El nombre es obligatorio y admite máximo 120 caracteres.</span> }</div>
         <div class="form-field"><label for="plan-type">Tipo *</label><select id="plan-type" formControlName="type">@for (option of types; track option.value) { <option [value]="option.value">{{ option.label }}</option> }</select>@if (mode() === 'edit') { <small class="field-help">El contrato de edición no permite cambiar el tipo.</small> }</div>
         <div class="form-field form-field-wide"><label for="plan-description">Descripción</label><textarea id="plan-description" formControlName="description" maxlength="300" rows="3"></textarea>@if (invalid('description')) { <span class="field-error">La descripción admite máximo 300 caracteres.</span> }</div>

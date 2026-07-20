@@ -12,7 +12,7 @@ import { ReportsFacade } from '../reports/data-access/reports.facade';
 import { reportErrorMessage } from '../reports/models/report-error-message';
 
 @Component({ selector: 'app-dashboard-page', imports: [RouterLink, PageHeaderComponent, LoadingStateComponent, ErrorStateComponent, AdminDashboardViewComponent], template: `
-  <app-page-header title="Dashboard administrativo" description="Indicadores operativos y financieros entregados por el backend." phase="Sprint 6"><button class="btn btn-secondary" type="button" [disabled]="facade.loading()" (click)="facade.refreshDashboard()">{{ facade.loading() ? 'Actualizando…' : 'Refrescar' }}</button></app-page-header>
+  <app-page-header title="Dashboard administrativo" description="Indicadores operativos y financieros de la sucursal." ><button class="btn btn-secondary" type="button" [disabled]="facade.loading()" (click)="facade.refreshDashboard()">{{ facade.loading() ? 'Actualizando…' : 'Refrescar' }}</button></app-page-header>
   @if (facade.lastUpdatedAt(); as updatedAt) { <p class="dashboard-updated" aria-live="polite">Última actualización: {{ dateTime(updatedAt) }}</p> }
   @if (facade.loading() && !facade.data()) { <app-loading-state message="Cargando dashboard…" /> }
   @else if (facade.error(); as error) { <app-error-state [message]="errorMessage(error)" [traceId]="error.traceId"><button class="btn btn-secondary" type="button" (click)="facade.loadDashboard()">Reintentar</button></app-error-state> }

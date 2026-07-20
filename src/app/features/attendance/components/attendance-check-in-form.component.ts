@@ -16,7 +16,7 @@ import { StudentSummaryResponse } from '../../students/models/student.models';
         </select>
         @if (form.controls.studentId.invalid && form.controls.studentId.touched) { <small class="field-error" id="student-required">Selecciona un alumno.</small> }
       </div>
-      <p class="field-help">El backend determina la decisión, la vigencia y el registro final de asistencia.</p>
+      <p class="field-help">La disponibilidad y el registro se confirmarán al guardar.</p>
       <div class="form-actions"><button class="btn btn-primary" type="submit" [disabled]="saving()">{{ saving() ? 'Registrando…' : 'Registrar check-in' }}</button></div>
     </form>
   `,

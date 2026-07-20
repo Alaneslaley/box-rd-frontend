@@ -13,10 +13,10 @@ import { securityErrorMessage } from '../models/security-error-message';
 import { CreateUserRequest } from '../models/security.models';
 
 @Component({ selector: 'app-user-create-page', imports: [PageHeaderComponent, LoadingStateComponent, EmptyStateComponent, ErrorStateComponent, UserFormComponent], template: `
-  <app-page-header title="Nuevo usuario" description="Crea una cuenta y asigna uno o más roles publicados por el backend." phase="Sprint 7" />
+  <app-page-header title="Nuevo usuario" description="Crea una cuenta y asigna uno o más roles." />
   @if (facade.rolesLoading()) { <app-loading-state message="Cargando roles disponibles…" /> }
   @else if (facade.rolesError(); as error) { <app-error-state title="No fue posible cargar roles" [message]="errorMessage(error)" [traceId]="error.traceId"><button class="btn btn-secondary" type="button" (click)="facade.loadRoles()">Reintentar</button></app-error-state> }
-  @else if (!facade.roles().length) { <app-empty-state title="No hay roles disponibles" description="No es posible crear un usuario sin roles. Verifica la configuración del backend." /> }
+  @else if (!facade.roles().length) { <app-empty-state title="No hay roles disponibles" description="No es posible crear un usuario sin roles disponibles." /> }
   @else { @if (saveError(); as error) { <app-error-state title="No fue posible crear el usuario" [message]="errorMessage(error)" [traceId]="error.traceId" /> }<app-user-form [roles]="facade.roles()" [initialBranchId]="branchId" [saving]="saving()" (submitted)="save($event)" (cancelled)="cancel()" /> }
 ` })
 export class UserCreatePageComponent implements OnInit {

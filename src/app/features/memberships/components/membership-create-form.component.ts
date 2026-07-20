@@ -11,7 +11,7 @@ const LOCAL_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
   imports: [ReactiveFormsModule],
   template: `
     <form class="student-form" [formGroup]="form" (ngSubmit)="submitForm()" novalidate>
-      <section class="card form-section"><h2>Asignación de membresía</h2><p>El backend determinará la fecha final, el estado y las clases disponibles.</p><div class="form-grid">
+      <section class="card form-section"><h2>Asignación de membresía</h2><p>Selecciona el alumno, el plan y la fecha de inicio.</p><div class="form-grid">
         <div class="form-field"><label for="membership-student">Alumno *</label><select id="membership-student" formControlName="studentId"><option value="">Selecciona un alumno</option>@for (student of students(); track student.id) { <option [value]="student.id">{{ student.fullName }}</option> }</select>@if (invalid('studentId')) { <span class="field-error">Selecciona un alumno.</span> }</div>
         <div class="form-field"><label for="membership-plan">Plan activo *</label><select id="membership-plan" formControlName="planId"><option value="">Selecciona un plan</option>@for (plan of plans(); track plan.id) { <option [value]="plan.id">{{ plan.name }}</option> }</select>@if (invalid('planId')) { <span class="field-error">Selecciona un plan.</span> }</div>
         <div class="form-field"><label for="membership-start-date">Fecha de inicio *</label><input id="membership-start-date" type="date" formControlName="startDate" />@if (invalid('startDate')) { <span class="field-error">Ingresa una fecha en formato válido.</span> }</div>
