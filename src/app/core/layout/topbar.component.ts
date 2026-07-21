@@ -5,7 +5,7 @@ import { AuthSessionStore } from '../auth/auth-session.store';
 import { LoadingService } from '../http/loading.service';
 
 @Component({ selector: 'app-topbar', template: `
-  <header class="topbar"><div><p class="eyebrow">Administración</p><strong>Operación GymBox</strong></div>
+  <header class="topbar"><div><p class="eyebrow">Administración</p><strong>Operación Escuela de box RD</strong></div>
   <div class="topbar-actions">@if (loading.isLoading()) { <span class="loading-inline" role="status">Cargando…</span> }
     <span class="user-name">{{ session.user() ? session.user()?.firstName + ' ' + session.user()?.lastName : 'Usuario' }}</span>
     <button class="btn btn-secondary" type="button" (click)="logout()">Cerrar sesión</button>
