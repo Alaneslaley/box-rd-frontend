@@ -8,7 +8,7 @@ import { AdminDashboardResponse } from '../models/report.models';
 import { IncomeSummaryComponent } from './income-summary.component';
 
 @Component({ selector: 'app-admin-dashboard-view', imports: [KpiCardComponent, IncomeSummaryComponent], template: `
-  <section class="dashboard-context" aria-label="Contexto del reporte"><span>Fecha operativa: <strong>{{ date(data().businessDate) }}</strong></span><span>Sucursal: <strong>{{ display.branchLabel(data().branchId) }}</strong></span></section>
+  <section class="dashboard-context" aria-label="Contexto del reporte"><span>Fecha operativa: <strong>{{ date(data().businessDate) }}</strong></span><span>Sucursal: <strong>{{ display.branchLabel(data().branchName, 'Sucursal actual') }}</strong></span></section>
   <section class="kpi-grid" aria-label="Indicadores administrativos">
     <app-kpi-card title="Alumnos activos" [value]="data().activeStudents" subtitle="Expedientes activos" tone="success" [route]="canStudents ? '/students' : null" />
     <app-kpi-card title="Membresías vencidas" [value]="data().expiredMemberships" [subtitle]="expiredSubtitle()" [tone]="expiredTone()" [route]="canMemberships ? '/memberships' : null" />

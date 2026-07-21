@@ -5,7 +5,9 @@ export type MembershipStatus = 'PENDING' | 'ACTIVE' | 'EXPIRED' | 'FROZEN' | 'CA
 export interface MembershipSnapshot {
   id: string;
   branchId: string;
+  branchName?: string | null;
   studentId: string;
+  studentName?: string | null;
   planId: string;
   planName: string;
   planType: PlanType;

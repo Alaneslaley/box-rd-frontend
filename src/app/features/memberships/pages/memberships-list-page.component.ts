@@ -1,4 +1,4 @@
-import { Component, OnInit, effect, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthSessionStore } from '../../../core/auth/auth-session.store';
 import { PERMISSIONS } from '../../../core/auth/permissions';
@@ -23,8 +23,8 @@ import { membershipStatusLabel, membershipStatusTone } from '../models/membershi
     @else if (facade.error(); as error) { <app-error-state [message]="errorMessage(error)" [traceId]="error.traceId"><button class="btn btn-secondary" type="button" (click)="facade.loadMemberships()">Reintentar</button></app-error-state> }
     @else if (!facade.page()?.content?.length) { <app-empty-state title="No hay membresías para mostrar" description="Aún no hay membresías registradas en esta página." /> }
     @else if (facade.page(); as page) {
-      <section class="card students-table-card"><div class="table-wrapper"><table><caption>Membresías registradas</caption><thead><tr><th scope="col">Alumno</th><th scope="col">Plan</th><th scope="col">Vigencia</th><th scope="col">Clases</th><th scope="col">Estado</th><th scope="col">Acciones</th></tr></thead><tbody>
-        @for (membership of page.content; track membership.id) { <tr><td data-label="Alumno"><a [routerLink]="['/students', membership.studentId]">{{ display.studentName(membership.studentId) }}</a></td><td data-label="Plan"><strong>{{ membership.planName }}</strong><small>{{ typeLabel(membership.planType) }}</small></td><td data-label="Vigencia">{{ membership.startDate }} a {{ membership.endDate }}</td><td data-label="Clases">{{ membership.remainingClasses ?? '—' }} / {{ membership.includedClasses ?? '—' }}</td><td data-label="Estado"><app-status-badge [label]="statusLabel(membership.status)" [tone]="statusTone(membership.status)" /></td><td data-label="Acciones"><div class="table-actions">@if (canRenew) { <a class="btn btn-link" [routerLink]="['/memberships', membership.id, 'renew']" [state]="{ membership: membership }">Renovar</a> }@if (canRegisterPayment) { <a class="btn btn-link" routerLink="/payments/new" [queryParams]="{ membershipId: membership.id }">Registrar pago</a> }@if (!canRenew && !canRegisterPayment) { <span class="muted">Solo consulta</span> }</div></td></tr> }
+      <section class="card students-table-card"><div class="table-wrapper"><table><caption>Membresías registradas</caption><thead><tr><th scope="col">Alumno</th><th scope="col">Sucursal</th><th scope="col">Plan</th><th scope="col">Vigencia</th><th scope="col">Clases</th><th scope="col">Estado</th><th scope="col">Acciones</th></tr></thead><tbody>
+        @for (membership of page.content; track membership.id) { <tr><td data-label="Alumno"><a [routerLink]="['/students', membership.studentId]">{{ display.studentName(membership.studentName) }}</a></td><td data-label="Sucursal">{{ display.branchLabel(membership.branchName) }}</td><td data-label="Plan"><strong>{{ membership.planName }}</strong><small>{{ typeLabel(membership.planType) }}</small></td><td data-label="Vigencia">{{ membership.startDate }} a {{ membership.endDate }}</td><td data-label="Clases">{{ membership.remainingClasses ?? '—' }} / {{ membership.includedClasses ?? '—' }}</td><td data-label="Estado"><app-status-badge [label]="statusLabel(membership.status)" [tone]="statusTone(membership.status)" /></td><td data-label="Acciones"><div class="table-actions">@if (canRenew) { <a class="btn btn-link" [routerLink]="['/memberships', membership.id, 'renew']" [state]="{ membership: membership }">Renovar</a> }@if (canRegisterPayment) { <a class="btn btn-link" routerLink="/payments/new" [queryParams]="{ membershipId: membership.id }">Registrar pago</a> }@if (!canRenew && !canRegisterPayment) { <span class="muted">Solo consulta</span> }</div></td></tr> }
       </tbody></table></div><nav class="pagination" aria-label="Paginación de membresías"><button class="btn btn-secondary" type="button" [disabled]="page.first" (click)="facade.changePage(page.page - 1)">Anterior</button><span>Página {{ page.page + 1 }} de {{ page.totalPages || 1 }} · {{ page.totalElements }} membresías</span><button class="btn btn-secondary" type="button" [disabled]="page.last" (click)="facade.changePage(page.page + 1)">Siguiente</button></nav></section>
     }
   `,
@@ -36,7 +36,6 @@ export class MembershipsListPageComponent implements OnInit {
   readonly canCreate = this.session.hasPermission(PERMISSIONS.MEMBERSHIPS_CREATE);
   readonly canRenew = this.session.hasPermission(PERMISSIONS.MEMBERSHIPS_RENEW);
   readonly canRegisterPayment = this.session.hasPermission(PERMISSIONS.PAYMENTS_REGISTER);
-  constructor() { effect(() => this.display.preloadStudentNames(this.facade.page()?.content.map((membership) => membership.studentId) ?? [])); }
   ngOnInit(): void { this.facade.loadMemberships(); }
   typeLabel = planTypeLabel;
   statusLabel = membershipStatusLabel;

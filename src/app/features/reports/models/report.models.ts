@@ -13,6 +13,7 @@ export interface IncomeByMethodResponse {
 export interface AdminDashboardResponse {
   businessDate: string;
   branchId: string;
+  branchName?: string | null;
   activeStudents: number;
   expiredMemberships: number;
   paymentsToday: number;

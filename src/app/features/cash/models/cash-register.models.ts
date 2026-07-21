@@ -13,9 +13,12 @@ export interface CloseCashRegisterRequest {
 export interface CashRegisterSnapshot {
   id: string;
   branchId: string;
+  branchName?: string | null;
   openedBy: string;
+  openedByName?: string | null;
   openedAt: string;
   closedBy: string | null;
+  closedByName?: string | null;
   closedAt: string | null;
   initialCash: number;
   expectedCash: number;

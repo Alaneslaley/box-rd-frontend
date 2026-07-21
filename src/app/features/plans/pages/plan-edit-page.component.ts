@@ -11,7 +11,7 @@ import { planErrorMessage } from '../models/plan-error-message';
 import { PlanSnapshot, UpdatePlanRequest } from '../models/plan.models';
 
 @Component({ selector: 'app-plan-edit-page', imports: [PageHeaderComponent, LoadingStateComponent, ErrorStateComponent, PlanFormComponent], template: `
-  <app-page-header title="Editar plan" description="Actualiza los campos permitidos por el contrato del backend." phase="Sprint 3" />
+  <app-page-header title="Editar plan" description="Actualiza la información disponible del plan." />
   @if (loading()) { <app-loading-state message="Cargando plan…" /> }
   @else if (loadError(); as message) { <app-error-state [message]="message" [traceId]="traceId()"><button class="btn btn-secondary" type="button" (click)="cancel()">Volver a planes</button></app-error-state> }
   @else if (plan(); as current) { @if (saveError(); as message) { <app-error-state title="No fue posible guardar los cambios" [message]="message" [traceId]="traceId()" /> }<app-plan-form mode="edit" [plan]="current" [saving]="saving()" submitLabel="Guardar cambios" (updateSubmitted)="save($event)" (cancelled)="cancel()" /> }` })

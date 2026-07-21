@@ -13,6 +13,7 @@ export interface CreateUserRequest {
 export interface UserSnapshot {
   id: string;
   branchId: string;
+  branchName?: string | null;
   email: string;
   firstName: string;
   lastName: string;

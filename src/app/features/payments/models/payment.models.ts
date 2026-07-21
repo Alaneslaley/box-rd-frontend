@@ -10,7 +10,9 @@ export interface PaymentSnapshot {
   id: string;
   folio: string;
   branchId: string;
+  branchName?: string | null;
   studentId: string;
+  studentName?: string | null;
   membershipId: string;
   /** Es null para pagos que no requieren caja, según el backend actual. */
   cashRegisterId: string | null;
@@ -28,6 +30,7 @@ export interface ReceiptSnapshot {
   receiptNumber: string;
   paymentFolio: string;
   studentId: string;
+  studentName?: string | null;
   amount: number;
   currency: string;
   paymentMethod: PaymentMethod | string;

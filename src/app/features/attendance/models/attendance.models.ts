@@ -4,6 +4,7 @@ export interface AttendanceResponse {
   id: string;
   branchId: string;
   studentId: string;
+  studentName?: string | null;
   attendanceDate: string;
   checkedInAt: string;
   status: string;

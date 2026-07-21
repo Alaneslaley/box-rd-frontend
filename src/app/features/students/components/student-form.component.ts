@@ -36,7 +36,7 @@ function optionalGroup(requiredFields: string[]): ValidatorFn {
         <div class="form-field form-field-wide"><label for="personalGoal">Objetivo personal</label><textarea id="personalGoal" formControlName="personalGoal" maxlength="300" rows="3"></textarea></div>
       </div></section>
 
-      <section class="card form-section" formGroupName="guardian"><h2>Tutor opcional</h2><p>Si capturas un tutor, nombre, teléfono y relación son obligatorios para completar el DTO.</p><div class="form-grid">
+      <section class="card form-section" formGroupName="guardian"><h2>Tutor opcional</h2><p>Si capturas un tutor, completa su nombre, teléfono y relación.</p><div class="form-grid">
         <div class="form-field"><label for="guardianFirstName">Nombre</label><input id="guardianFirstName" formControlName="firstName" maxlength="100" /></div>
         <div class="form-field"><label for="guardianLastName">Apellidos</label><input id="guardianLastName" formControlName="lastName" maxlength="120" /></div>
         <div class="form-field"><label for="guardianPhone">Teléfono</label><input id="guardianPhone" type="tel" formControlName="phone" maxlength="25" /></div>
