@@ -6,7 +6,7 @@
     "enabled": true
   },
   "assets": {
-    "directory": "dist/admin-box-RD/"
+    "directory": "./dist/admin-box-RD/"
   },
   "compatibility_flags": [
     "nodejs_compat"
