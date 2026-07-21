@@ -28,7 +28,6 @@ import { studentErrorMessage } from '../models/student-error-message';
       <div class="form-field"><label for="student-search">Buscar en esta página</label><input id="student-search" type="search" [formControl]="searchControl" placeholder="Nombre o teléfono" /></div>
       <div class="form-field"><label for="student-level">Nivel</label><select id="student-level" [formControl]="levelControl"><option value="">Todos los niveles</option>@for (option of levels; track option.value) { <option [value]="option.value">{{ option.label }}</option> }</select></div>
       <button class="btn btn-secondary" type="button" (click)="clearFilters()">Limpiar filtros</button>
-      <p class="filter-note">La API actual pagina en servidor; búsqueda y nivel filtran únicamente la página cargada.</p>
     </section>
 
     @if (facade.loading()) { <app-loading-state message="Cargando alumnos…" /> }
