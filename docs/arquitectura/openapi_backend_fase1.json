@@ -1312,6 +1312,9 @@
                             "type": "string"
                         },
                         "uniqueItems": true
+                    },
+                    "branchName": {
+                        "type": "string"
                     }
                 }
             },
@@ -1842,6 +1845,12 @@
                     "registeredAt": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "branchName": {
+                        "type": "string"
+                    },
+                    "studentName": {
+                        "type": "string"
                     }
                 }
             },
@@ -1910,6 +1919,12 @@
                     "remainingClasses": {
                         "type": "integer",
                         "format": "int32"
+                    },
+                    "branchName": {
+                        "type": "string"
+                    },
+                    "studentName": {
+                        "type": "string"
                     }
                 }
             },
@@ -1993,6 +2008,15 @@
                         "type": "string"
                     },
                     "notes": {
+                        "type": "string"
+                    },
+                    "branchName": {
+                        "type": "string"
+                    },
+                    "openedByName": {
+                        "type": "string"
+                    },
+                    "closedByName": {
                         "type": "string"
                     }
                 }
@@ -2127,6 +2151,9 @@
                     "membershipEndDateAtEvent": {
                         "type": "string",
                         "format": "date"
+                    },
+                    "studentName": {
+                        "type": "string"
                     }
                 }
             },
@@ -2342,6 +2369,9 @@
                         "items": {
                             "$ref": "#/components/schemas/IncomeByMethodResponse"
                         }
+                    },
+                    "branchName": {
+                        "type": "string"
                     }
                 }
             },
@@ -2479,6 +2509,9 @@
                     "generatedAt": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "studentName": {
+                        "type": "string"
                     }
                 }
             },
