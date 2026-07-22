@@ -1397,12 +1397,6 @@
                         "maxLength": 25,
                         "minLength": 0
                     },
-                    "email": {
-                        "type": "string",
-                        "format": "email",
-                        "maxLength": 254,
-                        "minLength": 0
-                    },
                     "birthDate": {
                         "type": "string",
                         "format": "date"
@@ -1431,7 +1425,8 @@
                 "required": [
                     "birthDate",
                     "firstName",
-                    "lastName"
+                    "lastName",
+                    "phone"
                 ]
             },
             "EmergencyContactResponse": {
@@ -1493,9 +1488,6 @@
                         "type": "string"
                     },
                     "phone": {
-                        "type": "string"
-                    },
-                    "email": {
                         "type": "string"
                     },
                     "birthDate": {
@@ -1685,12 +1677,6 @@
                         "maxLength": 25,
                         "minLength": 0
                     },
-                    "email": {
-                        "type": "string",
-                        "format": "email",
-                        "maxLength": 254,
-                        "minLength": 0
-                    },
                     "birthDate": {
                         "type": "string",
                         "format": "date"
@@ -1719,7 +1705,8 @@
                 "required": [
                     "birthDate",
                     "firstName",
-                    "lastName"
+                    "lastName",
+                    "phone"
                 ]
             },
             "CreatePlanRequest": {

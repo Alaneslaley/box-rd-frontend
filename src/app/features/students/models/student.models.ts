@@ -33,7 +33,7 @@ export interface StudentSummaryResponse {
   id: string;
   photoFileId: string | null;
   fullName: string;
-  phone: string | null;
+  phone: string;
   age: number;
   ageCategory: string;
   level: StudentLevel;
@@ -47,8 +47,7 @@ export interface StudentResponse {
   firstName: string;
   lastName: string;
   fullName: string;
-  phone: string | null;
-  email: string | null;
+  phone: string;
   birthDate: string;
   age: number;
   ageCategory: string;
@@ -62,8 +61,7 @@ export interface StudentResponse {
 export interface StudentUpdateRequest {
   firstName: string;
   lastName: string;
-  phone?: string | null;
-  email?: string | null;
+  phone: string;
   birthDate: string;
   personalGoal?: string | null;
   level: StudentLevel;
