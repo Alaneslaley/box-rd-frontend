@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manual de usuario · GymBox</title>
+  <style>
+    :root { --slate:#111827; --slate-2:#334155; --blue:#1e40af; --blue-soft:#dbeafe; --green:#047857; --green-soft:#d1fae5; --amber:#a16207; --amber-soft:#fef3c7; --red:#b91c1c; --gray:#64748b; --line:#cbd5e1; --paper:#fff; --bg:#f8fafc; }
+    * { box-sizing:border-box; }
+    html { font-family:Arial, Helvetica, sans-serif; color:var(--slate); background:var(--bg); }
+    body { margin:0; font-size:10.5pt; line-height:1.5; }
+    main { max-width:210mm; margin:0 auto; background:var(--paper); }
+    .page { min-height:277mm; padding:17mm 17mm 15mm; position:relative; break-after:page; }
+    .page:last-child { break-after:auto; }
+    .cover { display:flex; flex-direction:column; justify-content:center; color:#fff; background:linear-gradient(145deg, var(--slate) 0 58%, var(--blue) 58% 100%); }
+    .logo { display:inline-flex; align-items:center; gap:12px; margin-bottom:28mm; }
+    .logo-mark { display:grid; place-items:center; width:54px; height:54px; border-radius:12px; background:#2563eb; font-size:17px; font-weight:800; }
+    .logo strong { font-size:24px; letter-spacing:.02em; }
+    .cover h1 { max-width:140mm; margin:0; font-size:34pt; line-height:1.05; }
+    .cover .subtitle { max-width:135mm; margin:7mm 0 22mm; font-size:15pt; color:#dbeafe; }
+    .cover-meta { border-left:4px solid #60a5fa; padding-left:5mm; color:#e2e8f0; }
+    .cover-meta p { margin:1mm 0; }
+    h1, h2, h3 { color:var(--slate); line-height:1.18; }
+    h1 { margin:0 0 9mm; font-size:25pt; }
+    h2 { margin:9mm 0 4mm; font-size:17pt; border-bottom:2px solid var(--blue); padding-bottom:2mm; }
+    h3 { margin:6mm 0 2mm; font-size:12.5pt; }
+    p { margin:0 0 3mm; }
+    ul, ol { margin:2mm 0 4mm 6mm; padding-left:5mm; }
+    li { margin:1.2mm 0; }
+    a { color:var(--blue); }
+    .lead { font-size:12.5pt; color:var(--slate-2); }
+    .eyebrow { margin:0 0 2mm; color:var(--blue); font-size:8.5pt; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+    .callout { margin:5mm 0; padding:4mm 5mm; border-left:4px solid var(--blue); background:var(--blue-soft); border-radius:0 8px 8px 0; }
+    .callout strong { color:#1e3a8a; }
+    .callout.warning { border-color:var(--amber); background:var(--amber-soft); }
+    .callout.warning strong { color:#854d0e; }
+    .callout.success { border-color:var(--green); background:var(--green-soft); }
+    .callout.success strong { color:#065f46; }
+    .cards { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:4mm; margin:5mm 0; }
+    .card { border:1px solid var(--line); border-radius:9px; padding:4mm; break-inside:avoid; }
+    .card h3 { margin-top:0; color:var(--blue); }
+    .flow { display:grid; grid-template-columns:1fr auto 1fr auto 1fr auto 1fr; align-items:stretch; gap:2mm; margin:7mm 0; }
+    .flow-step { display:flex; flex-direction:column; justify-content:center; min-height:30mm; padding:3mm; border:1px solid #93c5fd; border-radius:8px; background:#eff6ff; text-align:center; }
+    .flow-step strong { color:#1e3a8a; }
+    .arrow { display:grid; place-items:center; color:var(--blue); font-size:18pt; font-weight:bold; }
+    table { width:100%; border-collapse:collapse; margin:4mm 0 6mm; font-size:9.5pt; break-inside:avoid; }
+    th { background:var(--slate); color:#fff; text-align:left; }
+    th, td { border:1px solid var(--line); padding:2.5mm; vertical-align:top; }
+    tr:nth-child(even) td { background:#f8fafc; }
+    .do-dont { display:grid; grid-template-columns:1fr 1fr; gap:5mm; margin:5mm 0; }
+    .do, .dont { border-radius:9px; padding:4mm; }
+    .do { background:var(--green-soft); border:1px solid #6ee7b7; }
+    .dont { background:#fef2f2; border:1px solid #fecaca; }
+    .do h3 { color:var(--green); margin-top:0; }
+    .dont h3 { color:var(--red); margin-top:0; }
+    .steps { counter-reset:step; list-style:none; margin-left:0; padding-left:0; }
+    .steps li { position:relative; min-height:9mm; padding:1mm 0 3mm 11mm; }
+    .steps li::before { counter-increment:step; content:counter(step); position:absolute; left:0; top:0; display:grid; place-items:center; width:7mm; height:7mm; border-radius:50%; color:#fff; background:var(--blue); font-weight:700; }
+    .checklist { list-style:none; margin-left:0; padding-left:0; }
+    .checklist li { position:relative; padding-left:8mm; }
+    .checklist li::before { content:'□'; position:absolute; left:0; color:var(--blue); font-size:14pt; line-height:1; }
+    .footer { position:absolute; left:17mm; right:17mm; bottom:6mm; display:flex; justify-content:space-between; padding-top:2mm; border-top:1px solid var(--line); color:var(--gray); font-size:8pt; }
+    .tag { display:inline-block; padding:1mm 2.5mm; border-radius:99px; background:var(--blue-soft); color:#1e3a8a; font-weight:700; }
+    .small { color:var(--gray); font-size:9pt; }
+    @page { size:A4; margin:0; }
+    @media print { body { background:#fff; } main { max-width:none; } }
+  </style>
+</head>
+<body>
+<main>
+  <section class="page cover">
+    <div class="logo"><span class="logo-mark">GB</span><strong>GymBox</strong></div>
+    <p class="eyebrow" style="color:#93c5fd">Web administrativa</p>
+    <h1 style="color:#fff">Manual de usuario</h1>
+    <p class="subtitle">Guía práctica para administrar alumnos, planes, membresías, pagos, caja, asistencia y usuarios.</p>
+    <div class="cover-meta">
+      <p><strong>Proyecto:</strong> App Escuela Box RD</p>
+      <p><strong>Edición:</strong> Julio de 2026</p>
+      <p><strong>Dirigido a:</strong> Administración, recepción, caja e instructores</p>
+    </div>
+  </section>
+
+  <section class="page">
+    <p class="eyebrow">Antes de comenzar</p>
+    <h1>Cómo entender GymBox</h1>
+    <p class="lead">GymBox separa el catálogo comercial de la relación particular con cada alumno. Esta distinción evita duplicados y mantiene ordenada la operación.</p>
+    <div class="flow">
+      <div class="flow-step"><strong>Plan</strong><span>Producto reutilizable</span></div><div class="arrow">→</div>
+      <div class="flow-step"><strong>Membresía</strong><span>Plan asignado a un alumno</span></div><div class="arrow">→</div>
+      <div class="flow-step"><strong>Pago</strong><span>Cobro de la membresía</span></div><div class="arrow">→</div>
+      <div class="flow-step"><strong>Recibo</strong><span>Comprobante generado</span></div>
+    </div>
+    <div class="callout warning"><strong>La idea más importante:</strong> en Planes no se registra un plan nuevo por cada alumno. Un plan se crea una sola vez —por ejemplo, “Mensual adultos”— y después se asigna a muchos alumnos mediante Membresías.</div>
+    <h2>Ejemplo correcto</h2>
+    <ol class="steps">
+      <li>Administración crea una vez el plan <strong>Mensual adultos</strong>, con precio y vigencia.</li>
+      <li>Recepción registra a Ana como alumna.</li>
+      <li>En Membresías se asigna el plan Mensual adultos a Ana.</li>
+      <li>En Pagos se registra el cobro de la membresía de Ana.</li>
+      <li>GymBox muestra el folio y el recibo correspondientes.</li>
+    </ol>
+    <h2>Qué hace cada módulo</h2>
+    <table><thead><tr><th>Módulo</th><th>Sirve para</th><th>No sirve para</th></tr></thead><tbody>
+      <tr><td>Planes</td><td>Definir productos, precios, duración y tipo.</td><td>Dar de alta la membresía individual de un alumno.</td></tr>
+      <tr><td>Alumnos</td><td>Guardar el expediente y los contactos de cada persona.</td><td>Registrar directamente un cobro.</td></tr>
+      <tr><td>Membresías</td><td>Asignar un plan existente a un alumno y administrar su vigencia.</td><td>Crear un producto comercial nuevo.</td></tr>
+      <tr><td>Pagos</td><td>Registrar el cobro relacionado con una membresía.</td><td>Cambiar el precio o la duración del plan.</td></tr>
+      <tr><td>Caja</td><td>Controlar apertura, efectivo esperado, conteo y cierre del turno.</td><td>Representar el saldo personal del alumno.</td></tr>
+    </tbody></table>
+    <div class="footer"><span>Manual de usuario · GymBox</span><span>Conceptos esenciales</span></div>
+  </section>
+
+  <section class="page">
+    <p class="eyebrow">Acceso y navegación</p>
+    <h1>Inicio de sesión y menú</h1>
+    <h2>Entrar a la aplicación</h2>
+    <ol class="steps">
+      <li>Abre la dirección web proporcionada por la administración.</li>
+      <li>Captura tu usuario o correo administrativo y contraseña.</li>
+      <li>Selecciona <strong>Iniciar sesión</strong>.</li>
+      <li>Si se solicita cambio de contraseña, sigue la indicación antes de continuar.</li>
+    </ol>
+    <div class="callout"><strong>Menú según permisos:</strong> cada usuario ve solamente los módulos y acciones relacionados con su función. Que una opción no aparezca normalmente significa que la cuenta no tiene ese permiso.</div>
+    <h2>Elementos principales</h2>
+    <div class="cards">
+      <article class="card"><h3>Menú lateral</h3><p>Permite cambiar entre Dashboard, Alumnos, Planes, Membresías, Pagos, Caja, Asistencia, Reportes y Seguridad.</p></article>
+      <article class="card"><h3>Barra superior</h3><p>Muestra la sesión actual y permite cerrar sesión de forma segura.</p></article>
+      <article class="card"><h3>Botones de acción</h3><p>Acciones como Nuevo alumno, Registrar pago o Abrir caja aparecen según los permisos de la cuenta.</p></article>
+      <article class="card"><h3>Estados</h3><p>Verde indica una condición positiva, ámbar una advertencia y rojo un error o bloqueo que requiere atención.</p></article>
+    </div>
+    <h2>Dashboard</h2>
+    <p>Resume la operación diaria de la sucursal: alumnos activos, membresías vencidas, pagos, asistencias e ingresos disponibles. Es una vista informativa; no se usa para capturar movimientos.</p>
+    <ul>
+      <li>Usa <strong>Refrescar</strong> para solicitar los datos más recientes.</li>
+      <li>Selecciona una tarjeta o acceso rápido para abrir el módulo relacionado.</li>
+      <li>Los importes y conteos mostrados corresponden a la sucursal y fecha operativa indicadas.</li>
+    </ul>
+    <div class="footer"><span>Manual de usuario · GymBox</span><span>Acceso y navegación</span></div>
+  </section>
+
+  <section class="page">
+    <p class="eyebrow">Módulo 1</p>
+    <h1>Planes</h1>
+    <p class="lead">Un plan es un producto del gimnasio que puede reutilizarse para muchos alumnos.</p>
+    <div class="callout success"><strong>Ejemplos:</strong> “Semanal adultos”, “Mensual infantil”, “Clase individual” o “Paquete de 10 clases”. Crea cada producto una sola vez y reutilízalo al generar membresías.</div>
+    <h2>Tipos de plan</h2>
+    <table><thead><tr><th>Tipo</th><th>Uso recomendado</th><th>Vigencia en la web</th><th>Clases incluidas</th></tr></thead><tbody>
+      <tr><td>Semanal</td><td>Acceso durante una semana.</td><td>7 días, automática.</td><td>No se captura.</td></tr>
+      <tr><td>Mensual</td><td>Acceso durante un mes operativo.</td><td>30 días, automática.</td><td>No se captura.</td></tr>
+      <tr><td>Clase suelta</td><td>Una sola clase.</td><td>1 día, automática.</td><td>Se controla como clase individual.</td></tr>
+      <tr><td>Paquete de clases</td><td>Cantidad limitada de clases.</td><td>Según configuración.</td><td>Se captura el total incluido.</td></tr>
+    </tbody></table>
+    <h2>Crear un plan</h2>
+    <ol class="steps">
+      <li>Abre <strong>Planes</strong> y selecciona <strong>Nuevo plan</strong>.</li>
+      <li>Escribe un nombre claro que identifique el producto.</li>
+      <li>Selecciona el tipo y captura precio, moneda y los campos disponibles.</li>
+      <li>Revisa que el nombre y precio no dupliquen accidentalmente un plan existente.</li>
+      <li>Guarda el plan. Quedará disponible para asignarlo desde Membresías.</li>
+    </ol>
+    <h2>Editar o desactivar</h2>
+    <p>La edición modifica el producto del catálogo. Antes de cambiar precio, duración o estado, confirma el efecto operativo esperado. Un plan inactivo deja de estar disponible para nuevas asignaciones, pero no debe confundirse con cancelar una membresía individual.</p>
+    <div class="do-dont"><div class="do"><h3>Correcto</h3><p>Crear “Mensual adultos” una vez y asignarlo a todos los alumnos que lo contraten.</p></div><div class="dont"><h3>Incorrecto</h3><p>Crear “Mensual Ana”, “Mensual Pedro” y “Mensual Luis”. Los nombres de alumnos pertenecen a Membresías, no al catálogo.</p></div></div>
+    <div class="footer"><span>Manual de usuario · GymBox</span><span>Planes</span></div>
+  </section>
+
+  <section class="page">
+    <p class="eyebrow">Módulo 2</p>
+    <h1>Alumnos</h1>
+    <p class="lead">El expediente del alumno concentra sus datos personales, teléfono celular, nivel, tutor, contacto de emergencia y relaciones operativas.</p>
+    <h2>Registrar un alumno</h2>
+    <ol class="steps">
+      <li>Abre <strong>Alumnos</strong> y selecciona <strong>Nuevo alumno</strong>.</li>
+      <li>Captura nombre, apellidos, fecha de nacimiento y teléfono celular.</li>
+      <li>Selecciona el nivel: Sin asignar, Principiante, Intermedio o Avanzado.</li>
+      <li>Si corresponde, registra tutor y contacto de emergencia.</li>
+      <li>Revisa la información y selecciona <strong>Crear alumno</strong>.</li>
+    </ol>
+    <div class="callout"><strong>Teléfono celular:</strong> es el contacto principal y obligatorio del alumno. Se guarda como texto para conservar prefijos, espacios y ceros iniciales.</div>
+    <h2>Tutor y contacto de emergencia</h2>
+    <ul>
+      <li>Son secciones opcionales.</li>
+      <li>Si comienzas a capturar una sección, completa los campos requeridos que indique la pantalla.</li>
+      <li>El correo disponible en el formulario pertenece al tutor, no al alumno.</li>
+    </ul>
+    <h2>Buscar, consultar y editar</h2>
+    <p>En el listado puedes buscar por nombre o teléfono dentro de la página actual y filtrar por nivel. Usa <strong>Ver</strong> para consultar el expediente o <strong>Editar</strong> para actualizar datos autorizados.</p>
+    <p>Desde el detalle también puedes revisar las membresías del alumno, abrir su historial de asistencia, registrar un check-in o iniciar una nueva membresía, siempre que tu cuenta tenga permisos.</p>
+    <div class="callout warning"><strong>Evita duplicados:</strong> antes de crear un alumno, búscalo por nombre y teléfono. No crees un expediente nuevo para renovar membresía o registrar un pago.</div>
+    <div class="footer"><span>Manual de usuario · GymBox</span><span>Alumnos</span></div>
+  </section>
+
+  <section class="page">
+    <p class="eyebrow">Módulo 3</p>
+    <h1>Membresías</h1>
+    <p class="lead">Una membresía une a un alumno con un plan concreto y define su periodo de vigencia.</p>
+    <div class="callout success"><strong>Regla práctica:</strong> Plan = qué vende el gimnasio. Membresía = quién lo contrató y desde cuándo.</div>
+    <h2>Crear una membresía</h2>
+    <ol class="steps">
+      <li>Confirma que el alumno ya existe.</li>
+      <li>Confirma que el plan correcto está activo en el catálogo.</li>
+      <li>Abre <strong>Membresías</strong> y selecciona <strong>Nueva membresía</strong>, o inicia la acción desde el detalle del alumno.</li>
+      <li>Selecciona el alumno, el plan y la fecha de inicio.</li>
+      <li>Guarda. GymBox mostrará la vigencia y el estado resultantes.</li>
+    </ol>
+    <h2>Estados comunes</h2>
+    <table><thead><tr><th>Estado</th><th>Significado operativo</th></tr></thead><tbody>
+      <tr><td><span class="tag">Pendiente</span></td><td>La membresía todavía requiere completar una condición del flujo.</td></tr>
+      <tr><td><span class="tag" style="background:#d1fae5;color:#065f46">Activa</span></td><td>Se encuentra vigente para la operación normal.</td></tr>
+      <tr><td><span class="tag" style="background:#fef3c7;color:#854d0e">Vencida</span></td><td>La fecha de vigencia terminó y requiere seguimiento.</td></tr>
+      <tr><td>Congelada</td><td>Está temporalmente suspendida según las reglas autorizadas.</td></tr>
+      <tr><td>Cancelada</td><td>Ya no continúa activa.</td></tr>
+    </tbody></table>
+    <h2>Renovar</h2>
+    <p>Selecciona <strong>Renovar</strong> en la membresía correspondiente e indica la fecha efectiva. No crees un nuevo plan y no crees otro alumno. La renovación trabaja sobre la membresía existente.</p>
+    <h2>Registrar pago desde una membresía</h2>
+    <p>La acción <strong>Registrar pago</strong> abre el formulario de Pagos con la membresía preseleccionada. Revisa que el alumno y el plan sean correctos antes de confirmar.</p>
+    <div class="footer"><span>Manual de usuario · GymBox</span><span>Membresías</span></div>
+  </section>
+
+  <section class="page">
+    <p class="eyebrow">Módulo 4</p>
+    <h1>Pagos y recibos</h1>
+    <p class="lead">Un pago registra un cobro asociado a una membresía. El sistema genera el folio, el importe confirmado y el recibo.</p>
+    <h2>Antes de cobrar</h2>
+    <ul class="checklist">
+      <li>El alumno correcto tiene una membresía identificable.</li>
+      <li>El método de pago coincide con lo recibido.</li>
+      <li>Si es efectivo, la caja correspondiente está abierta.</li>
+      <li>La fecha efectiva es correcta.</li>
+    </ul>
+    <h2>Registrar un pago</h2>
+    <ol class="steps">
+      <li>Abre <strong>Pagos</strong> y selecciona <strong>Registrar pago</strong>, o inicia desde la membresía.</li>
+      <li>Selecciona la membresía.</li>
+      <li>Elige Efectivo, Transferencia o Tarjeta manual.</li>
+      <li>Captura la fecha efectiva y confirma una sola vez.</li>
+      <li>Espera el resultado. No vuelvas a presionar mientras aparece “Registrando”.</li>
+      <li>Revisa el folio, importe, alumno, método y estado.</li>
+    </ol>
+    <div class="callout"><strong>El importe y el folio no se escriben manualmente:</strong> GymBox los determina a partir de la membresía y devuelve el resultado oficial del registro.</div>
+    <h2>Consultar e imprimir el recibo</h2>
+    <p>En el listado o detalle del pago selecciona <strong>Recibo</strong>. Verifica número, folio, alumno, importe, método, estado y fecha. Usa <strong>Imprimir</strong> para obtener una copia física o guardar como PDF.</p>
+    <h2>Si aparece un error</h2>
+    <ul>
+      <li>No repitas el cobro sin comprobar primero si el pago quedó registrado.</li>
+      <li>Si el efectivo es rechazado, revisa el estado de Caja.</li>
+      <li>Si la membresía no corresponde, cancela el formulario y selecciona la correcta.</li>
+      <li>Conserva el identificador de seguimiento mostrado en errores para soporte.</li>
+    </ul>
+    <div class="footer"><span>Manual de usuario · GymBox</span><span>Pagos y recibos</span></div>
+  </section>
+
+  <section class="page">
+    <p class="eyebrow">Módulo 5</p>
+    <h1>Caja</h1>
+    <p class="lead">Caja representa el turno de efectivo de una persona o sucursal. No es la cuenta individual de un alumno.</p>
+    <h2>Abrir caja</h2>
+    <ol class="steps">
+      <li>Abre <strong>Caja</strong>.</li>
+      <li>Si no hay una caja abierta, selecciona <strong>Abrir caja</strong>.</li>
+      <li>Captura el efectivo inicial y confirma la moneda.</li>
+      <li>Guarda y verifica el estado <strong>Abierta</strong>.</li>
+    </ol>
+    <p>Mientras la caja está abierta, los pagos en efectivo autorizados pueden formar parte del turno.</p>
+    <h2>Consultar caja actual</h2>
+    <p>La pantalla muestra sucursal, responsable de apertura, hora, caja inicial, caja esperada, moneda y, cuando aplica, conteo y diferencia.</p>
+    <div class="callout warning"><strong>No calcules ni corrijas la diferencia fuera del flujo:</strong> captura el efectivo contado tal como existe físicamente. GymBox mostrará la diferencia registrada.</div>
+    <h2>Cerrar caja</h2>
+    <ol class="steps">
+      <li>Cuenta el efectivo físico del turno.</li>
+      <li>Selecciona <strong>Cerrar caja</strong>.</li>
+      <li>Captura el efectivo contado, confirma la moneda y agrega notas si son necesarias.</li>
+      <li>Revisa el resumen y confirma el cierre.</li>
+      <li>Conserva evidencia o informa cualquier diferencia según el proceso interno.</li>
+    </ol>
+    <h2>Orden sugerido del turno</h2>
+    <div class="flow" style="grid-template-columns:1fr auto 1fr auto 1fr">
+      <div class="flow-step"><strong>Abrir</strong><span>Capturar fondo inicial</span></div><div class="arrow">→</div>
+      <div class="flow-step"><strong>Operar</strong><span>Registrar cobros</span></div><div class="arrow">→</div>
+      <div class="flow-step"><strong>Cerrar</strong><span>Contar y confirmar</span></div>
+    </div>
+    <div class="footer"><span>Manual de usuario · GymBox</span><span>Caja</span></div>
+  </section>
+
+  <section class="page">
+    <p class="eyebrow">Módulo 6</p>
+    <h1>Asistencia e Instructor hoy</h1>
+    <h2>Registrar check-in</h2>
+    <ol class="steps">
+      <li>Abre <strong>Registrar check-in</strong>.</li>
+      <li>Busca y selecciona al alumno correcto.</li>
+      <li>Selecciona <strong>Registrar entrada</strong> una sola vez.</li>
+      <li>Lee el resultado mostrado: alumno, decisión, nivel y estado de membresía.</li>
+    </ol>
+    <p>La aplicación registra la hora y conserva la información relevante al momento del evento. No cambies manualmente el nivel o la membresía para forzar un resultado.</p>
+    <h2>Asistencia de hoy</h2>
+    <p>Muestra las entradas confirmadas durante la jornada: alumno, hora, estado, edad, categoría, nivel, estado de membresía y vencimiento. Desde ahí puedes abrir el historial individual.</p>
+    <h2>Historial del alumno</h2>
+    <p>Permite revisar sus registros anteriores. También puede abrirse desde el detalle del alumno.</p>
+    <h2>Instructor hoy</h2>
+    <p>Es una vista rápida para instructores. Presenta los alumnos presentes, su foto cuando está disponible, edad, categoría, nivel y estado de membresía.</p>
+    <div class="callout"><strong>Diferencia:</strong> Asistencia es el registro operativo de entradas. Instructor hoy es una vista de consulta para organizar la sesión; no reemplaza el check-in.</div>
+    <h2>Buenas prácticas</h2>
+    <ul>
+      <li>Confirma el nombre y la foto antes de registrar.</li>
+      <li>No registres varias veces para corregir un resultado.</li>
+      <li>Si aparece una restricción, sigue el proceso autorizado del gimnasio.</li>
+      <li>Actualiza la vista cuando necesites confirmar las entradas más recientes.</li>
+    </ul>
+    <div class="footer"><span>Manual de usuario · GymBox</span><span>Asistencia</span></div>
+  </section>
+
+  <section class="page">
+    <p class="eyebrow">Módulos 7 y 8</p>
+    <h1>Reportes y seguridad</h1>
+    <h2>Reportes</h2>
+    <p>El reporte administrativo muestra indicadores diarios e ingresos agrupados por moneda y método. Úsalo para seguimiento operativo; los reportes marcados como “Disponible próximamente” todavía no tienen una consulta habilitada.</p>
+    <ul>
+      <li>Confirma la sucursal y fecha operativa.</li>
+      <li>Usa Refrescar antes de tomar una decisión basada en cifras recientes.</li>
+      <li>No sumes visualmente monedas distintas como si fueran una sola.</li>
+    </ul>
+    <h2>Seguridad: usuarios y roles</h2>
+    <p>Solo las cuentas autorizadas deben administrar usuarios.</p>
+    <h3>Crear usuario</h3>
+    <ol class="steps">
+      <li>Abre <strong>Seguridad → Usuarios → Nuevo usuario</strong>.</li>
+      <li>Captura sucursal, nombre, correo administrativo, teléfono y contraseña temporal.</li>
+      <li>Asigna al menos un rol de acuerdo con la función real de la persona.</li>
+      <li>Entrega la contraseña temporal por un medio seguro.</li>
+    </ol>
+    <h3>Cambiar roles o estado</h3>
+    <p>Desde el detalle de usuario puedes cambiar roles o estado cuando tengas permiso. Inactivar o bloquear una cuenta puede impedir el acceso. Revisa cuidadosamente si estás modificando tu propia cuenta.</p>
+    <div class="callout warning"><strong>Principio de mínimo acceso:</strong> asigna únicamente los permisos necesarios. No compartas cuentas y no uses una cuenta administrativa para operación diaria si existe un rol más limitado.</div>
+    <h2>Cerrar sesión</h2>
+    <p>Al terminar, selecciona <strong>Cerrar sesión</strong>. Esto es especialmente importante en equipos compartidos de recepción o caja.</p>
+    <div class="footer"><span>Manual de usuario · GymBox</span><span>Reportes y seguridad</span></div>
+  </section>
+
+  <section class="page">
+    <p class="eyebrow">Operación diaria</p>
+    <h1>Flujos recomendados</h1>
+    <h2>Alta y primer cobro de un alumno</h2>
+    <ol class="steps">
+      <li>Buscar al alumno para evitar duplicados.</li>
+      <li>Crear su expediente en Alumnos si no existe.</li>
+      <li>Asignar un plan existente desde Membresías.</li>
+      <li>Abrir Caja si el pago será en efectivo y no hay una abierta.</li>
+      <li>Registrar el pago de la membresía.</li>
+      <li>Verificar el folio y entregar o imprimir el recibo.</li>
+    </ol>
+    <h2>Renovación de un alumno existente</h2>
+    <ol class="steps">
+      <li>Abrir el expediente o el listado de Membresías.</li>
+      <li>Localizar la membresía correcta.</li>
+      <li>Seleccionar Renovar e indicar la fecha efectiva.</li>
+      <li>Registrar el pago asociado.</li>
+      <li>Comprobar la nueva vigencia y el recibo.</li>
+    </ol>
+    <h2>Apertura de jornada</h2>
+    <ul class="checklist">
+      <li>Iniciar sesión con la cuenta personal.</li>
+      <li>Revisar Dashboard y alertas relevantes.</li>
+      <li>Abrir Caja si habrá cobros en efectivo.</li>
+      <li>Confirmar que los planes utilizados están disponibles.</li>
+      <li>Abrir Asistencia o Instructor hoy según la función.</li>
+    </ul>
+    <h2>Cierre de jornada</h2>
+    <ul class="checklist">
+      <li>Verificar que los pagos del turno estén registrados.</li>
+      <li>Contar el efectivo físico.</li>
+      <li>Cerrar Caja y revisar la diferencia.</li>
+      <li>Consultar el Dashboard o reporte diario.</li>
+      <li>Cerrar sesión.</li>
+    </ul>
+    <div class="footer"><span>Manual de usuario · GymBox</span><span>Flujos recomendados</span></div>
+  </section>
+
+  <section class="page">
+    <p class="eyebrow">Ayuda</p>
+    <h1>Errores comunes y solución</h1>
+    <table><thead><tr><th>Situación</th><th>Qué revisar</th></tr></thead><tbody>
+      <tr><td>No aparece un módulo o botón.</td><td>La cuenta puede no tener el permiso correspondiente. Solicita revisión a administración.</td></tr>
+      <tr><td>No se puede registrar un pago en efectivo.</td><td>Comprueba que exista una caja abierta y que la membresía seleccionada sea correcta.</td></tr>
+      <tr><td>No encuentro al alumno en un selector.</td><td>Busca primero en Alumnos, revisa la página actual y confirma que el expediente exista.</td></tr>
+      <tr><td>La membresía aparece vencida.</td><td>Revisa la fecha final y utiliza Renovar si corresponde. No crees un plan nuevo.</td></tr>
+      <tr><td>El check-in es rechazado.</td><td>Lee el mensaje mostrado y revisa el expediente y la membresía. No repitas varias veces.</td></tr>
+      <tr><td>La caja presenta diferencia.</td><td>Confirma el conteo físico y registra una nota. Sigue el procedimiento interno.</td></tr>
+      <tr><td>La sesión expiró.</td><td>Inicia sesión nuevamente. Si persiste, comunica el identificador de seguimiento a soporte.</td></tr>
+      <tr><td>La información parece desactualizada.</td><td>Selecciona Refrescar o vuelve a abrir la pantalla.</td></tr>
+    </tbody></table>
+    <h2>Glosario rápido</h2>
+    <table><thead><tr><th>Término</th><th>Definición</th></tr></thead><tbody>
+      <tr><td>Plan</td><td>Producto reutilizable con tipo, precio y vigencia.</td></tr>
+      <tr><td>Membresía</td><td>Plan asignado a un alumno durante un periodo.</td></tr>
+      <tr><td>Pago</td><td>Registro del cobro de una membresía.</td></tr>
+      <tr><td>Folio</td><td>Referencia única visible del pago.</td></tr>
+      <tr><td>Recibo</td><td>Comprobante generado para el pago.</td></tr>
+      <tr><td>Caja</td><td>Turno de control de efectivo.</td></tr>
+      <tr><td>Check-in</td><td>Registro de entrada del alumno.</td></tr>
+      <tr><td>Rol</td><td>Conjunto de permisos asignado a un usuario administrativo.</td></tr>
+    </tbody></table>
+    <div class="callout success"><strong>Para recordar:</strong> primero se define el plan, después se asigna como membresía, luego se registra el pago y finalmente se consulta el recibo.</div>
+    <p class="small">La disponibilidad de módulos, botones y datos depende de los permisos asignados a cada cuenta y de las funciones habilitadas en la versión actual de GymBox.</p>
+    <div class="footer"><span>Manual de usuario · GymBox</span><span>Ayuda y glosario</span></div>
+  </section>
+</main>
+</body>
+</html>
