@@ -91,7 +91,7 @@ export class StudentFormComponent {
   invalid(controlName: 'firstName' | 'lastName' | 'birthDate' | 'phone'): boolean { const control = this.form.controls[controlName]; return control.touched && control.invalid; }
 
   submitForm(): void {
-    if (this.form.invalid) { this.form.markAllAsTouched(); return; }
+    if (this.saving() || this.form.invalid) { this.form.markAllAsTouched(); return; }
     const value = this.form.getRawValue();
     const hasGuardian = Object.values(value.guardian).some((item) => Boolean(item.trim()));
     const hasEmergency = Object.values(value.emergencyContact).some((item) => Boolean(item.trim()));

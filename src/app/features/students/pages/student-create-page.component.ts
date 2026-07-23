@@ -11,7 +11,7 @@ import { studentErrorMessage } from '../models/student-error-message';
 import { StudentCreateRequest, StudentUpdateRequest } from '../models/student.models';
 
 @Component({ selector: 'app-student-create-page', imports: [PageHeaderComponent, ErrorStateComponent, StudentFormComponent], template: `
-  <app-page-header title="Nuevo alumno" description="Crea el expediente administrativo básico del alumno." phase="Sprint 2" />
+  <app-page-header title="Nuevo alumno" description="Crea el expediente administrativo básico del alumno." />
   @if (error(); as message) { <app-error-state title="No fue posible guardar el alumno" [message]="message" [traceId]="traceId()" /> }
   <app-student-form [saving]="saving()" submitLabel="Crear alumno" (submitted)="save($event)" (cancelled)="cancel()" />` })
 export class StudentCreatePageComponent {
@@ -19,6 +19,7 @@ export class StudentCreatePageComponent {
   readonly saving = signal(false); readonly error = signal<string | null>(null); readonly traceId = signal<string | undefined>(undefined);
 
   save(formValue: StudentUpdateRequest): void {
+    if (this.saving()) return;
     this.saving.set(true); this.error.set(null); this.traceId.set(undefined);
     const branchId = this.session.user()?.branchId;
     const request: StudentCreateRequest = { ...formValue, ...(branchId ? { branchId } : {}) };

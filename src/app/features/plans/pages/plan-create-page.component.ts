@@ -11,7 +11,7 @@ import { planErrorMessage } from '../models/plan-error-message';
 import { CreatePlanRequest } from '../models/plan.models';
 
 @Component({ selector: 'app-plan-create-page', imports: [PageHeaderComponent, ErrorStateComponent, PlanFormComponent], template: `
-  <app-page-header title="Nuevo plan" description="Agrega un plan al catálogo de la sucursal." phase="Sprint 3" />
+  <app-page-header title="Nuevo plan" description="Agrega un plan al catálogo de la sucursal." />
   @if (error(); as message) { <app-error-state title="No fue posible guardar el plan" [message]="message" [traceId]="traceId()" /> }
   <app-plan-form [saving]="saving()" submitLabel="Crear plan" (createSubmitted)="save($event)" (cancelled)="cancel()" />` })
 export class PlanCreatePageComponent {
@@ -23,6 +23,7 @@ export class PlanCreatePageComponent {
   readonly traceId = signal<string | undefined>(undefined);
 
   save(formValue: CreatePlanRequest): void {
+    if (this.saving()) return;
     this.saving.set(true); this.error.set(null); this.traceId.set(undefined);
     const branchId = this.session.user()?.branchId;
     const request: CreatePlanRequest = { ...formValue, ...(branchId ? { branchId } : {}) };

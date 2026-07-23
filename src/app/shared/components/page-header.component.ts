@@ -4,6 +4,4 @@ import { Component, input } from '@angular/core';
 export class PageHeaderComponent {
   readonly title = input.required<string>();
   readonly description = input.required<string>();
-  /** Compatibilidad temporal para las pantallas existentes; no se muestra en la interfaz. */
-  readonly phase = input('');
 }

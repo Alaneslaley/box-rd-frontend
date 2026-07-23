@@ -20,7 +20,7 @@ import { studentErrorMessage } from '../models/student-error-message';
   selector: 'app-students-list-page',
   imports: [ReactiveFormsModule, RouterLink, PageHeaderComponent, LoadingStateComponent, EmptyStateComponent, ErrorStateComponent, StatusBadgeComponent],
   template: `
-    <app-page-header title="Alumnos" description="Consulta y administra los expedientes básicos de alumnos." phase="Sprint 2">
+    <app-page-header title="Alumnos" description="Consulta y administra los expedientes básicos de alumnos.">
       @if (canCreate) { <a class="btn btn-primary" routerLink="/students/new">Nuevo alumno</a> }
     </app-page-header>
 

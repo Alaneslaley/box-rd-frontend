@@ -15,7 +15,7 @@ import { membershipErrorMessage } from '../models/membership-error-message';
 import { CreateMembershipRequest } from '../models/membership.models';
 
 @Component({ selector: 'app-membership-create-page', imports: [PageHeaderComponent, LoadingStateComponent, ErrorStateComponent, MembershipCreateFormComponent], template: `
-  <app-page-header title="Nueva membresía" description="Asigna un plan activo a un alumno." phase="Sprint 3" />
+  <app-page-header title="Nueva membresía" description="Asigna un plan activo a un alumno." />
   @if (loadingOptions()) { <app-loading-state message="Cargando alumnos y planes…" /> }
   @else if (optionsError(); as message) { <app-error-state title="No fue posible preparar el formulario" [message]="message" [traceId]="traceId()"><button class="btn btn-secondary" type="button" (click)="loadOptions()">Reintentar</button></app-error-state> }
   @else { @if (saveError(); as message) { <app-error-state title="No fue posible crear la membresía" [message]="message" [traceId]="traceId()" /> }
@@ -52,6 +52,7 @@ export class MembershipCreatePageComponent implements OnInit {
   }
 
   save(request: CreateMembershipRequest): void {
+    if (this.saving()) return;
     this.saving.set(true); this.saveError.set(null); this.traceId.set(undefined);
     this.facade.createMembership(request).pipe(finalize(() => this.saving.set(false))).subscribe({
       next: (membership) => void this.router.navigate(this.initialStudentId ? ['/students', membership.studentId] : ['/memberships']),

@@ -18,5 +18,5 @@ export class CashCloseFormComponent {
   readonly form = new FormGroup({ countedCash: new FormControl<number | null>(null, { validators: [Validators.required, Validators.min(0)] }), currency: new FormControl('MXN', { nonNullable: true, validators: [Validators.required, Validators.pattern(CURRENCY_PATTERN)] }), notes: new FormControl('', { nonNullable: true, validators: [Validators.maxLength(500)] }) });
   constructor() { effect(() => this.form.controls.currency.setValue(this.currency(), { emitEvent: false })); }
   invalid(name: keyof typeof this.form.controls): boolean { const control = this.form.controls[name]; return control.touched && control.invalid; }
-  submitForm(): void { if (this.form.invalid) { this.form.markAllAsTouched(); return; } const value = this.form.getRawValue(); this.submitted.emit({ countedCash: value.countedCash as number, currency: value.currency.toUpperCase(), notes: value.notes.trim() || null }); }
+  submitForm(): void { if (this.saving() || this.form.invalid) { this.form.markAllAsTouched(); return; } const value = this.form.getRawValue(); this.submitted.emit({ countedCash: value.countedCash as number, currency: value.currency.toUpperCase(), notes: value.notes.trim() || null }); }
 }

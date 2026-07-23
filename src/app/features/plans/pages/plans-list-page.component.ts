@@ -18,7 +18,7 @@ import { PlanSnapshot } from '../models/plan.models';
   selector: 'app-plans-list-page',
   imports: [ReactiveFormsModule, RouterLink, PageHeaderComponent, LoadingStateComponent, EmptyStateComponent, ErrorStateComponent, StatusBadgeComponent],
   template: `
-    <app-page-header title="Planes" description="Administra el catálogo de planes disponible para las membresías." phase="Sprint 3">@if (canCreate) { <a class="btn btn-primary" routerLink="/plans/new">Nuevo plan</a> }</app-page-header>
+    <app-page-header title="Planes" description="Administra el catálogo de planes disponible para las membresías.">@if (canCreate) { <a class="btn btn-primary" routerLink="/plans/new">Nuevo plan</a> }</app-page-header>
     <section class="card catalog-filter"><label class="check-field" for="include-inactive"><input id="include-inactive" type="checkbox" [formControl]="includeInactiveControl" /> Incluir planes inactivos</label></section>
     @if (facade.loading()) { <app-loading-state message="Cargando planes…" /> }
     @else if (facade.error(); as error) { <app-error-state [message]="errorMessage(error)" [traceId]="error.traceId"><button class="btn btn-secondary" type="button" (click)="facade.loadPlans()">Reintentar</button></app-error-state> }

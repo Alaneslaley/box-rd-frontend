@@ -10,7 +10,7 @@ import { ReportsFacade } from '../data-access/reports.facade';
 import { reportErrorMessage } from '../models/report-error-message';
 
 @Component({ selector: 'app-admin-dashboard-report-page', imports: [RouterLink, PageHeaderComponent, LoadingStateComponent, ErrorStateComponent, AdminDashboardViewComponent], template: `
-  <app-page-header title="Reporte administrativo" description="Vista detallada de los indicadores diarios disponibles." phase="Sprint 6"><div class="header-actions"><a class="btn btn-secondary" routerLink="/dashboard">Volver al dashboard</a><button class="btn btn-primary" type="button" [disabled]="facade.loading()" (click)="facade.refreshDashboard()">{{ facade.loading() ? 'Actualizando…' : 'Refrescar' }}</button></div></app-page-header>
+  <app-page-header title="Reporte administrativo" description="Vista detallada de los indicadores diarios disponibles."><div class="header-actions"><a class="btn btn-secondary" routerLink="/dashboard">Volver al dashboard</a><button class="btn btn-primary" type="button" [disabled]="facade.loading()" (click)="facade.refreshDashboard()">{{ facade.loading() ? 'Actualizando…' : 'Refrescar' }}</button></div></app-page-header>
   @if (facade.lastUpdatedAt(); as updatedAt) { <p class="dashboard-updated" aria-live="polite">Última actualización: {{ dateTime(updatedAt) }}</p> }
   @if (facade.loading() && !facade.data()) { <app-loading-state message="Generando reporte…" /> }
   @else if (facade.error(); as error) { <app-error-state [message]="errorMessage(error)" [traceId]="error.traceId"><button class="btn btn-secondary" type="button" (click)="facade.loadDashboard()">Reintentar</button></app-error-state> }

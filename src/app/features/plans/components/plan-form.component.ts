@@ -74,7 +74,7 @@ export class PlanFormComponent {
   hasAutomaticValidity(type: PlanType = this.form.controls.type.value): boolean { return this.automaticValidityDays(type) !== null; }
 
   submitForm(): void {
-    if (this.form.invalid) { this.form.markAllAsTouched(); return; }
+    if (this.saving() || this.form.invalid) { this.form.markAllAsTouched(); return; }
     const value = this.form.getRawValue();
     const common = { name: value.name.trim(), description: value.description.trim() || null, price: value.price as number, currency: value.currency.trim().toUpperCase(), validityDays: (this.automaticValidityDays(value.type) ?? value.validityDays) as number };
     const classes = this.supportsIncludedClasses(value.type) ? { includedClasses: value.includedClasses } : {};

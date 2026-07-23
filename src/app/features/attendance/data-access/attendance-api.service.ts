@@ -1,9 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { APP_CONFIG } from '../../../core/config/app-config.token';
 import { API_ENDPOINTS } from '../../../core/config/api-endpoints';
 import { PageResponse } from '../../../core/models/page-response.model';
+import { normalizePageRequest, normalizePageResponse } from '../../../core/models/page-response.util';
 import { AttendancePageParams, AttendanceResponse, CheckInRequest, CheckInResponse, StudentAttendanceParams } from '../models/attendance.models';
 
 @Injectable({ providedIn: 'root' })
@@ -17,11 +18,15 @@ export class AttendanceApiService {
   }
 
   today(params: AttendancePageParams): Observable<PageResponse<AttendanceResponse>> {
-    return this.http.get<PageResponse<AttendanceResponse>>(`${this.baseUrl}/today`, { params: this.pageParams(params) });
+    const requested = normalizePageRequest(params);
+    return this.http.get<PageResponse<AttendanceResponse>>(`${this.baseUrl}/today`, { params: this.pageParams(requested) })
+      .pipe(map((page) => normalizePageResponse(page, requested)));
   }
 
   byStudent(params: StudentAttendanceParams): Observable<PageResponse<AttendanceResponse>> {
-    return this.http.get<PageResponse<AttendanceResponse>>(`${this.baseUrl}/student/${encodeURIComponent(params.studentId)}`, { params: this.pageParams(params) });
+    const requested = normalizePageRequest(params);
+    return this.http.get<PageResponse<AttendanceResponse>>(`${this.baseUrl}/student/${encodeURIComponent(params.studentId)}`, { params: this.pageParams(requested) })
+      .pipe(map((page) => normalizePageResponse(page, requested)));
   }
 
   private pageParams(params: AttendancePageParams): HttpParams {

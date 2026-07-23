@@ -34,7 +34,7 @@ export class MembershipRenewPageComponent implements OnInit {
 
   ngOnInit(): void { const state = globalThis.history?.state as { membership?: MembershipSnapshot } | undefined; if (state?.membership?.id === this.id) this.membership.set(state.membership); }
   save(): void {
-    if (this.form.invalid || !this.membership()) { this.form.markAllAsTouched(); return; }
+    if (this.saving() || this.form.invalid || !this.membership()) { this.form.markAllAsTouched(); return; }
     this.saving.set(true); this.error.set(null); this.traceId.set(undefined);
     this.facade.renewMembership(this.id, this.form.getRawValue()).pipe(finalize(() => this.saving.set(false))).subscribe({
       next: () => void this.router.navigate(['/memberships']),

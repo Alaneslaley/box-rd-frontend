@@ -18,7 +18,7 @@ import { membershipStatusLabel, membershipStatusTone } from '../models/membershi
   selector: 'app-memberships-list-page',
   imports: [RouterLink, PageHeaderComponent, LoadingStateComponent, EmptyStateComponent, ErrorStateComponent, StatusBadgeComponent],
   template: `
-    <app-page-header title="Membresías" description="Consulta vigencias y crea o renueva membresías de alumnos." phase="Sprint 3">@if (canCreate) { <a class="btn btn-primary" routerLink="/memberships/new">Nueva membresía</a> }</app-page-header>
+    <app-page-header title="Membresías" description="Consulta vigencias y crea o renueva membresías de alumnos.">@if (canCreate) { <a class="btn btn-primary" routerLink="/memberships/new">Nueva membresía</a> }</app-page-header>
     @if (facade.loading()) { <app-loading-state message="Cargando membresías…" /> }
     @else if (facade.error(); as error) { <app-error-state [message]="errorMessage(error)" [traceId]="error.traceId"><button class="btn btn-secondary" type="button" (click)="facade.loadMemberships()">Reintentar</button></app-error-state> }
     @else if (!facade.page()?.content?.length) { <app-empty-state title="No hay membresías para mostrar" description="Aún no hay membresías registradas en esta página." /> }

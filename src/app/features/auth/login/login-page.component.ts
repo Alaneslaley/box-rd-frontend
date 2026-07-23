@@ -5,6 +5,7 @@ import { finalize } from 'rxjs';
 import { ApiError } from '../../../core/models/api-error.model';
 import { AuthFacade } from '../../../core/auth/auth.facade';
 import { APP_CONFIG } from '../../../core/config/app-config.token';
+import { safeReturnUrl } from '../../../core/auth/safe-return-url';
 
 @Component({
   selector: 'app-login-page',
@@ -35,10 +36,10 @@ export class LoginPageComponent {
   readonly submitting = signal(false);
   readonly error = signal<string | null>(null);
   readonly form = new FormGroup({ email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }), password: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(6)] }) });
-  readonly returnUrl = computed(() => this.route.snapshot.queryParamMap.get('returnUrl') || '/dashboard');
+  readonly returnUrl = computed(() => safeReturnUrl(this.route.snapshot.queryParamMap.get('returnUrl')));
 
   submit(): void {
-    if (this.form.invalid) { this.form.markAllAsTouched(); return; }
+    if (this.submitting() || this.form.invalid) { this.form.markAllAsTouched(); return; }
     this.submitting.set(true); this.error.set(null);
     const request = this.form.getRawValue();
     this.auth.login(request).pipe(finalize(() => this.submitting.set(false))).subscribe({

@@ -37,6 +37,7 @@ export class PlanEditPageComponent implements OnInit {
   }
 
   save(request: UpdatePlanRequest): void {
+    if (this.saving()) return;
     this.saving.set(true); this.saveError.set(null); this.traceId.set(undefined);
     this.facade.updatePlan(this.id, request).pipe(finalize(() => this.saving.set(false))).subscribe({
       next: () => void this.router.navigate(['/plans']),

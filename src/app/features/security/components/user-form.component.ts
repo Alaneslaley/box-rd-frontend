@@ -8,7 +8,7 @@ const NOT_BLANK_PATTERN = /\S/;
 @Component({ selector: 'app-user-form', imports: [ReactiveFormsModule], template: `
   <form class="student-form user-form" [formGroup]="form" (ngSubmit)="submitForm()" novalidate>
     <section class="card form-section"><h2>Datos del usuario</h2><p>La contraseña temporal se usa únicamente para crear la cuenta.</p><div class="form-grid">
-      <div class="form-field form-field-wide"><label for="user-branch">Sucursal asignada *</label><input id="user-branch" formControlName="branchId" maxlength="36" placeholder="Identificador de la sucursal" />@if (invalid('branchId')) { <span class="field-error">Ingresa un identificador de sucursal válido.</span> }<small class="field-help">Selecciona la sucursal correspondiente al crear la cuenta.</small></div>
+      <div class="form-field form-field-wide"><label for="user-branch">Sucursal asignada *</label><input id="user-branch" formControlName="branchId" maxlength="36" [readOnly]="initialBranchId() !== null" [placeholder]="initialBranchId() ? 'Sucursal de la sesión' : 'Código de sucursal'" />@if (invalid('branchId')) { <span class="field-error">Revisa la sucursal asignada.</span> }<small class="field-help">La cuenta se creará en la sucursal indicada.</small></div>
       <div class="form-field"><label for="user-first-name">Nombre *</label><input id="user-first-name" formControlName="firstName" maxlength="100" />@if (invalid('firstName')) { <span class="field-error">El nombre es obligatorio y admite máximo 100 caracteres.</span> }</div>
       <div class="form-field"><label for="user-last-name">Apellidos *</label><input id="user-last-name" formControlName="lastName" maxlength="120" />@if (invalid('lastName')) { <span class="field-error">Los apellidos son obligatorios y admiten máximo 120 caracteres.</span> }</div>
       <div class="form-field"><label for="user-email">Correo *</label><input id="user-email" type="email" formControlName="email" maxlength="254" autocomplete="email" />@if (invalid('email')) { <span class="field-error">Captura un correo válido de máximo 254 caracteres.</span> }</div>
@@ -43,7 +43,7 @@ export class UserFormComponent {
   invalid(name: keyof typeof this.form.controls): boolean { const control = this.form.controls[name]; return control.touched && control.invalid; }
   toggleRole(code: string, checked: boolean): void { const selected = this.form.controls.roles.value; this.form.controls.roles.setValue(checked ? [...new Set([...selected, code])] : selected.filter((role) => role !== code)); this.form.controls.roles.markAsTouched(); }
   submitForm(): void {
-    if (this.form.invalid) { this.form.markAllAsTouched(); return; }
+    if (this.saving() || this.form.invalid) { this.form.markAllAsTouched(); return; }
     const value = this.form.getRawValue();
     const request: CreateUserRequest = { branchId: value.branchId.trim(), firstName: value.firstName.trim(), lastName: value.lastName.trim(), email: value.email.trim(), ...(value.phone.trim() ? { phone: value.phone.trim() } : {}), password: value.password, roles: value.roles };
     this.submitted.emit(request);

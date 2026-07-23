@@ -3,7 +3,6 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideClientHydration } from '@angular/platform-browser';
 import { environment } from '../environments/environment';
 import { APP_CONFIG } from './core/config/app-config.token';
 import { authTokenInterceptor } from './core/http/auth-token.interceptor';
@@ -19,7 +18,6 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideHttpClient(withInterceptors([traceRequestInterceptor, authTokenInterceptor, loadingInterceptor, httpErrorInterceptor])),
-    provideClientHydration(),
     { provide: APP_CONFIG, useValue: environment },
     provideAppInitializer(() => {
       const auth = inject(AuthFacade);

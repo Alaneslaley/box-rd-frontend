@@ -11,7 +11,7 @@ import { cashRegisterErrorMessage } from '../models/cash-register-error-message'
 import { OpenCashRegisterRequest } from '../models/cash-register.models';
 
 @Component({ selector: 'app-cash-open-page', imports: [PageHeaderComponent, ErrorStateComponent, CashOpenFormComponent], template: `
-  <app-page-header title="Abrir caja" description="Inicia el turno de caja del usuario autenticado." phase="Sprint 4" />
+  <app-page-header title="Abrir caja" description="Inicia el turno de caja del usuario autenticado." />
   @if (error(); as message) { <app-error-state title="No fue posible abrir la caja" [message]="message" [traceId]="traceId()" /> }
   <app-cash-open-form [initialBranchId]="branchId" [saving]="saving()" (submitted)="save($event)" (cancelled)="cancel()" />` })
 export class CashOpenPageComponent {

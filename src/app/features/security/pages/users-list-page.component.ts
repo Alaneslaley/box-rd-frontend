@@ -14,7 +14,7 @@ import { securityErrorMessage } from '../models/security-error-message';
 import { passwordChangeLabel, passwordChangeTone, userStatusLabel, userStatusTone } from '../models/security-labels';
 
 @Component({ selector: 'app-users-list-page', imports: [RouterLink, PageHeaderComponent, LoadingStateComponent, EmptyStateComponent, ErrorStateComponent, StatusBadgeComponent], template: `
-  <app-page-header title="Usuarios" description="Consulta cuentas operativas y administra acciones permitidas." phase="Sprint 7"><div class="header-actions"><button class="btn btn-secondary" type="button" (click)="facade.loadUsers()">Refrescar</button>@if (canCreate) { <a class="btn btn-primary" routerLink="/security/users/new">Nuevo usuario</a> }</div></app-page-header>
+  <app-page-header title="Usuarios" description="Consulta cuentas operativas y administra acciones permitidas."><div class="header-actions"><button class="btn btn-secondary" type="button" (click)="facade.loadUsers()">Refrescar</button>@if (canCreate) { <a class="btn btn-primary" routerLink="/security/users/new">Nuevo usuario</a> }</div></app-page-header>
   @if (successMessage) { <p class="alert alert-success" role="status">{{ successMessage }}</p> }
   @if (facade.usersLoading()) { <app-loading-state message="Cargando usuarios…" /> }
   @else if (facade.usersError(); as error) { <app-error-state [message]="errorMessage(error)" [traceId]="error.traceId"><button class="btn btn-secondary" type="button" (click)="facade.loadUsers()">Reintentar</button></app-error-state> }

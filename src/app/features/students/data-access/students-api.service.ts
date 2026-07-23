@@ -1,9 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { APP_CONFIG } from '../../../core/config/app-config.token';
 import { API_ENDPOINTS } from '../../../core/config/api-endpoints';
 import { PageResponse } from '../../../core/models/page-response.model';
+import { normalizePageRequest, normalizePageResponse } from '../../../core/models/page-response.util';
 import { StudentCreateRequest, StudentResponse, StudentSearchParams, StudentSummaryResponse, StudentUpdateRequest } from '../models/student.models';
 
 @Injectable({ providedIn: 'root' })
@@ -14,8 +15,10 @@ export class StudentsApiService {
 
   search(params: StudentSearchParams): Observable<PageResponse<StudentSummaryResponse>> {
     // El controller actual solo acepta page y size. search/level se aplican localmente en la facade.
-    const httpParams = new HttpParams().set('page', params.page).set('size', params.size);
-    return this.http.get<PageResponse<StudentSummaryResponse>>(this.baseUrl, { params: httpParams });
+    const requested = normalizePageRequest(params);
+    const httpParams = new HttpParams().set('page', requested.page).set('size', requested.size);
+    return this.http.get<PageResponse<StudentSummaryResponse>>(this.baseUrl, { params: httpParams })
+      .pipe(map((page) => normalizePageResponse(page, requested)));
   }
 
   getById(id: string): Observable<StudentResponse> {

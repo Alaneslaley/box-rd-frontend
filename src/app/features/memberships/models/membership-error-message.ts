@@ -1,9 +1,7 @@
 import { ApiError } from '../../../core/models/api-error.model';
+import { productErrorMessage } from '../../../core/http/api-error.mapper';
 
 export function membershipErrorMessage(error: ApiError, fallback: string): string {
-  if (error.status === 400) return error.message || 'Revisa los datos de la membresía e intenta nuevamente.';
-  if (error.status === 403) return 'No tienes permiso para realizar esta acción.';
   if (error.status === 404) return 'La membresía solicitada no fue encontrada.';
-  if (error.status && error.status >= 500) return 'El servidor no pudo procesar la solicitud. Intenta más tarde.';
-  return error.message || fallback;
+  return productErrorMessage(error.status ?? -1, fallback);
 }

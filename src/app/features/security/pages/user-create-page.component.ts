@@ -23,7 +23,7 @@ export class UserCreatePageComponent implements OnInit {
   readonly facade = inject(SecurityFacade); private readonly session = inject(AuthSessionStore); private readonly router = inject(Router);
   readonly branchId = this.session.user()?.branchId ?? null; readonly saving = signal(false); readonly saveError = signal<ApiError | null>(null);
   ngOnInit(): void { this.facade.loadRoles(); }
-  save(request: CreateUserRequest): void { this.saving.set(true); this.saveError.set(null); this.facade.createUser(request).pipe(finalize(() => this.saving.set(false))).subscribe({ next: () => void this.router.navigate(['/security/users'], { state: { successMessage: 'Usuario creado correctamente.' } }), error: (error: ApiError) => this.saveError.set(error) }); }
+  save(request: CreateUserRequest): void { if (this.saving()) return; this.saving.set(true); this.saveError.set(null); this.facade.createUser(request).pipe(finalize(() => this.saving.set(false))).subscribe({ next: () => void this.router.navigate(['/security/users'], { state: { successMessage: 'Usuario creado correctamente.' } }), error: (error: ApiError) => this.saveError.set(error) }); }
   cancel(): void { void this.router.navigate(['/security/users']); }
   errorMessage(error: ApiError): string { return securityErrorMessage(error, 'No fue posible completar la operación.'); }
 }

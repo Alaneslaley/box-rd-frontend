@@ -7,6 +7,7 @@ import { PERMISSIONS } from './core/auth/permissions';
 const feature = (path: string, permissionsAny: string[], loader: () => Promise<Routes>): Routes[number] => ({ path, data: { permissionsAny }, loadChildren: loader });
 
 export const routes: Routes = [
+  { path: 'login', pathMatch: 'full', redirectTo: 'auth/login' },
   { path: 'auth', loadChildren: () => import('./features/auth/auth.routes').then((m) => m.AUTH_ROUTES) },
   { path: '', component: AppShellComponent, canActivate: [authGuard], canActivateChild: [permissionChildGuard], children: [
     { path: '', pathMatch: 'full', redirectTo: 'dashboard' },

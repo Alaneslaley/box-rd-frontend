@@ -11,7 +11,7 @@ import { studentErrorMessage } from '../models/student-error-message';
 import { StudentResponse, StudentUpdateRequest } from '../models/student.models';
 
 @Component({ selector: 'app-student-edit-page', imports: [PageHeaderComponent, LoadingStateComponent, ErrorStateComponent, StudentFormComponent], template: `
-  <app-page-header title="Editar alumno" description="Actualiza los datos básicos autorizados del expediente." phase="Sprint 2" />
+  <app-page-header title="Editar alumno" description="Actualiza los datos básicos autorizados del expediente." />
   @if (loading()) { <app-loading-state message="Cargando expediente…" /> }
   @else if (loadError(); as message) { <app-error-state [message]="message" [traceId]="traceId()" /> }
   @else if (student(); as currentStudent) {
@@ -25,6 +25,6 @@ export class StudentEditPageComponent implements OnInit {
   readonly loadError = signal<string | null>(null); readonly saveError = signal<string | null>(null); readonly traceId = signal<string | undefined>(undefined);
 
   ngOnInit(): void { this.facade.loadDetail(this.id).pipe(finalize(() => this.loading.set(false))).subscribe({ next: (student) => this.student.set(student), error: (error: ApiError) => { this.loadError.set(studentErrorMessage(error, 'No fue posible cargar el alumno.')); this.traceId.set(error.traceId); } }); }
-  save(request: StudentUpdateRequest): void { this.saving.set(true); this.saveError.set(null); this.traceId.set(undefined); this.facade.updateStudent(this.id, request).pipe(finalize(() => this.saving.set(false))).subscribe({ next: (student) => void this.router.navigate(['/students', student.id]), error: (error: ApiError) => { this.saveError.set(studentErrorMessage(error, 'No fue posible actualizar el alumno.')); this.traceId.set(error.traceId); } }); }
+  save(request: StudentUpdateRequest): void { if (this.saving()) return; this.saving.set(true); this.saveError.set(null); this.traceId.set(undefined); this.facade.updateStudent(this.id, request).pipe(finalize(() => this.saving.set(false))).subscribe({ next: (student) => void this.router.navigate(['/students', student.id]), error: (error: ApiError) => { this.saveError.set(studentErrorMessage(error, 'No fue posible actualizar el alumno.')); this.traceId.set(error.traceId); } }); }
   cancel(): void { void this.router.navigate(['/students', this.id]); }
 }

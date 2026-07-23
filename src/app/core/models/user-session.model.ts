@@ -6,6 +6,7 @@ export interface Permission {
 export interface AuthUser {
   id: string;
   branchId: string | null;
+  branchName?: string | null;
   email: string;
   firstName: string;
   lastName: string;

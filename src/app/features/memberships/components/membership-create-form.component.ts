@@ -36,5 +36,5 @@ export class MembershipCreateFormComponent {
 
   constructor() { effect(() => { const studentId = this.initialStudentId(); if (studentId) this.form.controls.studentId.setValue(studentId, { emitEvent: false }); }); }
   invalid(name: keyof typeof this.form.controls): boolean { const control = this.form.controls[name]; return control.touched && control.invalid; }
-  submitForm(): void { if (this.form.invalid) { this.form.markAllAsTouched(); return; } this.submitted.emit(this.form.getRawValue()); }
+  submitForm(): void { if (this.saving() || this.form.invalid) { this.form.markAllAsTouched(); return; } this.submitted.emit(this.form.getRawValue()); }
 }

@@ -19,5 +19,5 @@ export class CashOpenFormComponent {
   readonly form = new FormGroup({ branchId: new FormControl('', { nonNullable: true, validators: [Validators.pattern(UUID_PATTERN)] }), initialCash: new FormControl<number | null>(null, { validators: [Validators.required, Validators.min(0)] }), currency: new FormControl('MXN', { nonNullable: true, validators: [Validators.required, Validators.pattern(CURRENCY_PATTERN)] }) });
   constructor() { effect(() => this.form.controls.branchId.setValue(this.initialBranchId(), { emitEvent: false })); }
   invalid(name: keyof typeof this.form.controls): boolean { const control = this.form.controls[name]; return control.touched && control.invalid; }
-  submitForm(): void { if (this.form.invalid) { this.form.markAllAsTouched(); return; } const value = this.form.getRawValue(); const branchId = value.branchId.trim(); this.submitted.emit({ ...(branchId ? { branchId } : {}), initialCash: value.initialCash as number, currency: value.currency.toUpperCase() }); }
+  submitForm(): void { if (this.saving() || this.form.invalid) { this.form.markAllAsTouched(); return; } const value = this.form.getRawValue(); const branchId = value.branchId.trim(); this.submitted.emit({ ...(branchId ? { branchId } : {}), initialCash: value.initialCash as number, currency: value.currency.toUpperCase() }); }
 }

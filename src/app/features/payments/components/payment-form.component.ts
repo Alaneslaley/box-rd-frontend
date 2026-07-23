@@ -37,5 +37,5 @@ export class PaymentFormComponent {
   constructor() { effect(() => { const id = this.initialMembershipId(); if (id) this.form.controls.membershipId.setValue(id, { emitEvent: false }); }); }
   invalid(name: keyof typeof this.form.controls): boolean { const control = this.form.controls[name]; return control.touched && control.invalid; }
   showExternalMembership(): boolean { const id = this.initialMembershipId(); return Boolean(id) && !this.memberships().some((membership) => membership.id === id); }
-  submitForm(): void { if (this.form.invalid) { this.form.markAllAsTouched(); return; } const value = this.form.getRawValue(); this.submitted.emit({ membershipId: value.membershipId, method: value.method as PaymentMethod, effectiveOn: value.effectiveOn }); }
+  submitForm(): void { if (this.saving() || this.form.invalid) { this.form.markAllAsTouched(); return; } const value = this.form.getRawValue(); this.submitted.emit({ membershipId: value.membershipId, method: value.method as PaymentMethod, effectiveOn: value.effectiveOn }); }
 }

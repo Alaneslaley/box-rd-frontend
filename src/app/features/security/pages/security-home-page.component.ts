@@ -5,7 +5,7 @@ import { PERMISSIONS } from '../../../core/auth/permissions';
 import { PageHeaderComponent } from '../../../shared/components/page-header.component';
 
 @Component({ selector: 'app-security-home-page', imports: [RouterLink, PageHeaderComponent], template: `
-  <app-page-header title="Seguridad administrativa" description="Gestiona usuarios y consulta roles disponibles para la operación." phase="Sprint 7" />
+  <app-page-header title="Seguridad administrativa" description="Gestiona usuarios y consulta roles disponibles para la operación." />
   <section class="state-card security-notice"><h2>Gestión segura</h2><p>Administra cuentas, roles y permisos disponibles para la operación.</p></section>
   <section class="security-home-grid">
     @if (canReadUsers) { <a class="card security-home-card" routerLink="/security/users"><h2>Usuarios</h2><p>Consulta usuarios, crea cuentas y administra su estado o roles según tus permisos.</p><span class="btn btn-link">Abrir usuarios</span></a> }
